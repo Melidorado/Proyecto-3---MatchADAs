@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>MatcheADAs</title>
+</head>
+<body>
+    <div class="overlay">
+        <div class="contenedor-principal">
+            <h1 class="titulo">MatcheADAs</h1>
+            <div class="informacion">
+                <div class="puntaje">
+                    <p class="combo">Combo x<span id="valor-combo">1</span></p>
+                    <p class="puntos">Puntos: <span id="valor-puntos">0</span></p>
+                </div>
+                <div>
+                    <button class="boton-info" id="boton ayuda">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="boton-info" id="boton-reiniciar-juego">
+                        <i class="fas fa-undo-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="contenedor-grilla">
+                <div class="grilla">
+                    <!-- ACA VA A IR LA GRILLA -->
+                </div>
+            </div>
+            <div class="tiempo">
+                <i class="fas fa-hourglass-half"></i>
+                <p class="temporizador">0:00</p>
+            </div>
+        </div>
+        <!-- AGREGAR 4 MODALES: BIENVENIDA, NUEVO JUEGO (ELEGIR DIFICULTAD), FIN DEL JUEGO, REINICIAR -->
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
