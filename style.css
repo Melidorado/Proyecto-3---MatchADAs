@@ -180,6 +180,19 @@ body {
     margin-left: 5px;
 }
 
+.boton-cancelar {
+    background-color: #eeeeee;
+    color: #000;
+}
+
+#modal-nuevo-juego {
+    z-index: 4;
+}
+
+#modal-fin-juego {
+    z-index: 4;
+}
+
 /* ///////////////////////////////////////////////////////////////////////// */
 .ocultar {
     display: none;
