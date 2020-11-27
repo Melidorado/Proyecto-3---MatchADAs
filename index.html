@@ -8,34 +8,69 @@
     <title>MatcheADAs</title>
 </head>
 <body>
-    <div class="overlay">
-        <div class="contenedor-principal">
-            <h1 class="titulo">MatcheADAs</h1>
-            <div class="informacion">
-                <div class="puntaje">
-                    <p class="combo">Combo x<span id="valor-combo">1</span></p>
-                    <p class="puntos">Puntos: <span id="valor-puntos">0</span></p>
-                </div>
-                <div>
-                    <button class="boton-info" id="boton ayuda">
-                        <i class="fas fa-info-circle"></i>
-                    </button>
-                    <button class="boton-info" id="boton-reiniciar-juego">
-                        <i class="fas fa-undo-alt"></i>
-                    </button>
-                </div>
+    
+    <div class="contenedor-principal">
+        <h1 class="titulo">MatcheADAs</h1>
+        <div class="informacion">
+            <div class="puntaje">
+                <p class="combo">Combo x<span id="valor-combo">1</span></p>
+                <p class="puntos">Puntos: <span id="valor-puntos">0</span></p>
             </div>
-            <div class="contenedor-grilla">
-                <div class="grilla">
-                    <!-- ACA VA A IR LA GRILLA -->
-                </div>
-            </div>
-            <div class="tiempo">
-                <i class="fas fa-hourglass-half"></i>
-                <p class="temporizador">0:00</p>
+            <div>
+                <button class="boton-info" id="boton ayuda">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+                <button class="boton-info" id="boton-reiniciar-juego">
+                    <i class="fas fa-undo-alt"></i>
+                </button>
             </div>
         </div>
-        <!-- AGREGAR 4 MODALES: BIENVENIDA, NUEVO JUEGO (ELEGIR DIFICULTAD), FIN DEL JUEGO, REINICIAR -->
+        <div class="contenedor-grilla">
+            <div class="grilla">
+                <!-- ACA VA A IR LA GRILLA -->
+            </div>
+        </div>
+        <div class="tiempo">
+            <i class="fas fa-hourglass-half"></i>
+            <p class="temporizador">0:00</p>
+        </div>
+    </div>
+    <div class="overlay"></div>
+        <div class="modal" id="modal-bienvenida">
+            <h2 class="titulo-modal">¡Bienvenida!</h2>
+            <div class="contenido-modal">
+                <p class="texto-modal"> 
+                En MatcheADAs tu objetivo es juntar tres o más ítems del mismo tipo, ya sea en fila o columna. Para eso, selecciona un ítem y a continuación un ítem adyacente para intercambiarlos de lugar.
+                </p>
+                <p class="texto-modal">
+                Si se forma un grupo, esos ítems se eliminarán y ganarás puntos. ¡Sigue armando grupos de 3 o más antes de que se acabe el tiempo!
+                </p>
+                <h4>Controles</h4>
+                <p>Click izquierdo: selección</p>
+                <p>Enter o Espacio: selección</p>
+                <p>Flechas o WASD: movimiento e intercambio</p>
+            </div>
+            <div class="botones-modal">
+                <button class="boton" id="boton-jugar">A jugar</button>
+            </div>
+        </div>
+
+        <div class="modal ocultar" id="modal-nuevo-juego">
+            <h2 class="titulo-modal">Nuevo Juego</h2>
+            <div class="contenido-modal">
+                <p> 
+                Selecciona una dificultad
+                </p>
+            </div>
+            <div class="botones-modal">
+                <button class="boton" id="boton-facil">Fácil</button>
+                <button class="boton" id="boton-normal">Normal</button>
+                <button class="boton" id="boton-dificil">Difícil</button>
+            </div>
+        </div>
+
+        <div class="modal-fin-juego ocultar"></div>
+        <div class="modal-reiniciar ocultar"></div>
     </div>
 
     <script src="index.js"></script>
