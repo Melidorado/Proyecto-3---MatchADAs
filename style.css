@@ -76,7 +76,9 @@ body {
     background: rgb(0 0 0 / 73%);
     width: 500px;
     height: 500px;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tiempo {
@@ -197,3 +199,18 @@ body {
 .ocultar {
     display: none;
 }
+.grilla {
+    position: relative;
+}
+
+.grilla > div {
+    position: absolute;
+    transition: top 0.5s, left 0.5s;
+    text-shadow: none;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
