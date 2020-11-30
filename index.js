@@ -12,9 +12,9 @@ const obtenerFrutaAlAzar = frutas => {
 
 const generarGrilla = () => {
     grilla = []
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 9; i++) {
       grilla[i] = []
-      for (let j = 0; j < 5; j++) {
+      for (let j = 0; j < 9; j++) {
         grilla[i][j] = obtenerFrutaAlAzar(frutas)
       }
     }
@@ -22,21 +22,24 @@ const generarGrilla = () => {
   }
   
   const generarCuadrado = (x, y, array) => {
-    const tamanio = 50
+    const tamanio = 474 / 9
   
     const cuadrado = document.createElement('div')
     cuadrado.dataset.x = x
     cuadrado.dataset.y = y 
-    cuadrado.innerHTML = `<div class="emoji"> ${array[x][y]} </div>`
+    cuadrado.innerHTML = `<div class="emoji" style="font-size: ${tamanio - 10}px;"> ${array[x][y]} </div>`
     cuadrado.style.top = `${x * tamanio}px`
     cuadrado.style.left = `${y * tamanio}px`
+    cuadrado.style.width = `${tamanio}px`
+    cuadrado.style.height = `${tamanio}px`
     return cuadrado
 }
 
   
   const agregarGrillaAHTML = () => {
     const anchoDeGrilla = 50 * 5
-    grillaHTML.style.width = `500px`
+    grillaHTML.style.width = `474px`
+    grillaHTML.style.height = `474px`
     const listaDeFrutas = grilla;
     for (let i = 0; i < listaDeFrutas.length; i++) {
       for (let j = 0; j < listaDeFrutas[i].length; j++) {

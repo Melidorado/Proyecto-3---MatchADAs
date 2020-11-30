@@ -74,6 +74,9 @@ body {
     background: rgb(0 0 0 / 73%);
     width: 500px;
     height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tiempo {
@@ -103,14 +106,10 @@ body {
     position: absolute;
     transition: top 0.5s, left 0.5s;
     text-shadow: none;
-    width: 60px;
-    height: 60px;
-    padding: 10pxs;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 }
 
-.emoji {
-    font-size: 50px;
-}
