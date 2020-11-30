@@ -2,11 +2,11 @@ const grilla = document.querySelector(".grilla");
 /* const botonNuevoJuego = document.querySelector("#nuevo-juego") */
 const botonReiniciarJuego = document.querySelector("#boton-reiniciar-juego");
 
-let actualizarReloj = () => {
-  let segundosTimer = 30;
+const actualizarReloj = () => {
+  let segundosIniciales = 30;
 
-  let timer = () => {
-    let segundosTotales = segundosTimer;
+  const timer = () => {
+    let segundosTotales = segundosIniciales;
 
     minutos = Math.floor(segundosTotales / 60);
     minutos = (minutos < 10 ? "0" : "") + minutos;
@@ -17,12 +17,12 @@ let actualizarReloj = () => {
     document.getElementById("temporizador").innerHTML =
       minutos + ":" + segundosTotales;
 
-    segundosTimer--;
+    segundosIniciales--;
 
-    if (segundosTimer > -1) {
+    if (segundosIniciales > -1) {
       setTimeout(timer, 1000);
     }
   };
   timer();
 };
-actualizarReloj("fin");
+actualizarReloj();
