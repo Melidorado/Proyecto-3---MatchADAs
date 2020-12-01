@@ -1,6 +1,9 @@
-const grilla = document.querySelector(".grilla");
+// const grilla = document.querySelector(".grilla");
 /* const botonNuevoJuego = document.querySelector("#nuevo-juego") */
-const botonReiniciarJuego = document.querySelector("#boton-reiniciar-juego");
+// const botonReiniciarJuego = document.querySelector("#boton-reiniciar-juego");
+
+
+// TEMPORIZADOR ///////////////////////////////////////////////
 
 const actualizarReloj = () => {
   let segundosIniciales = 30;
@@ -68,7 +71,6 @@ botonDificil.onclick = () => {
 
 const grillaHTML = document.querySelector(".grilla");
 /* const botonNuevoJuego = document.querySelector("#nuevo-juego") */
-const botonReiniciarJuego = document.querySelector("#boton-reiniciar-juego");
 
 const frutas = ["🍉", "🥥", "🍋", "🍒", "🍑", "🥝"];
 
@@ -115,3 +117,5 @@ const agregarGrillaAHTML = (dificultad) => {
     }
   }
 };
+
+
