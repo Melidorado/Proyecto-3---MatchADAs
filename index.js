@@ -28,7 +28,7 @@ const actualizarReloj = () => {
   };
   timer();
 };
-actualizarReloj();
+
 
 //MODALES ///////////////////////////////////////////////
 const overlay = document.querySelector(".overlay");
@@ -41,6 +41,8 @@ const botonFacil = document.getElementById("boton-facil");
 const botonNormal = document.getElementById("boton-normal");
 const botonDificil = document.getElementById("boton-dificil");
 
+const botonMatch = document.getElementById("boton-match")
+
 botonAJugar.onclick = () => {
   modalBienvenida.classList.add("ocultar");
   modalNuevoJuego.classList.remove("ocultar");
@@ -51,6 +53,10 @@ botonFacil.onclick = () => {
   modalNuevoJuego.classList.add("ocultar");
   generarGrilla(9);
   agregarGrillaAHTML(9);
+  actualizarReloj()
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
+
 };
 
 botonNormal.onclick = () => {
@@ -58,6 +64,9 @@ botonNormal.onclick = () => {
   modalNuevoJuego.classList.add("ocultar");
   generarGrilla(8);
   agregarGrillaAHTML(8);
+  actualizarReloj()
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
 };
 
 botonDificil.onclick = () => {
@@ -65,6 +74,9 @@ botonDificil.onclick = () => {
   modalNuevoJuego.classList.add("ocultar");
   generarGrilla(7);
   agregarGrillaAHTML(7);
+  actualizarReloj()
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
 };
 
 //GRILLA ///////////////////////////////////////////////
@@ -97,7 +109,8 @@ const generarCuadrado = (x, y, array, dificultad) => {
   const cuadrado = document.createElement("div");
   cuadrado.dataset.x = x;
   cuadrado.dataset.y = y;
-  cuadrado.innerHTML = `<div class="emoji" style="font-size: ${
+  cuadrado.classList.add("emoji")
+  cuadrado.innerHTML = `<div style="font-size: ${
     tamanio - 10
   }px;"> ${array[x][y]} </div>`;
   cuadrado.style.top = `${x * tamanio}px`;
@@ -117,5 +130,55 @@ const agregarGrillaAHTML = (dificultad) => {
     }
   }
 };
+
+
+/// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
+
+
+
+const encontrarMatchHorizontal = () => {
+
+  for (let i = 0; i < grilla.length; i++) {
+      
+    for (let j = 0; j < grilla[i].length; j++) {
+       
+      if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
+        const emoji1 = document.querySelector(`div[data-x='${i}'][data-y='${j + 1}']`)
+        const emoji2 = document.querySelector(`div[data-x='${i}'][data-y='${j + 2}']`)
+        emoji.style.backgroundColor = 'yellow'
+        emoji1.style.backgroundColor = 'yellow'
+        emoji2.style.backgroundColor = 'yellow'    
+                    
+      }
+               
+    }
+      
+  }
+  
+}
+
+
+const encontrarMatchVertical = () => {
+  for (let i = 0; i < grilla.length; i++) {
+      
+    for (let j = 0; j < grilla[i].length; j++) {
+       
+      if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
+        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
+        const emoji1 = document.querySelector(`div[data-x='${i + 1}'][data-y='${j}']`)
+        const emoji2 = document.querySelector(`div[data-x='${i + 2}'][data-y='${j}']`)
+        emoji.style.backgroundColor = 'orange'
+        emoji1.style.backgroundColor = 'orange'
+        emoji2.style.backgroundColor = 'orange'    
+                    
+      }
+               
+    }
+      
+  }
+
+}
+
 
 
