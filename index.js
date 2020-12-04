@@ -22,8 +22,8 @@ const actualizarReloj = () => {
     }
 
     if (segundosTotales == 00) {
-      overlay.classList.remove("ocultar")
-      modalFinDelJuego.classList.remove("ocultar")
+      mostrarOverlay()
+      mostrarModalFinDelJuego()
     }
     
   };
@@ -53,24 +53,64 @@ const modalReiniciarJuego = document.getElementById("modal-reiniciar")
 const botonCancelarReinicioJuego = document.getElementById("boton-cancelar")
 const botonNuevoJuegoReiniciado = document.getElementById("boton-nuevo-juego-reiniciado")
 
-botonNuevoJuego.onclick = () => {
-  modalFinDelJuego.classList.add("ocultar")
+const ocultarOverlay = () => {
+  overlay.classList.add("ocultar");
+}
+
+const mostrarOverlay = () => {
+  overlay.classList.remove("ocultar")
+}
+
+const ocultarModalNuevoJuego = () => {
+  modalNuevoJuego.classList.add("ocultar");
+}
+
+const mostrarModalNuevoJuego = () => {
   modalNuevoJuego.classList.remove("ocultar")
 }
 
-botonReiniciarJuegoFinalizado.onclick = () => {
+const ocultarModalFinDelJuego = () => {
   modalFinDelJuego.classList.add("ocultar")
-  overlay.classList.add("ocultar")
+}
+
+const mostrarModalFinDelJuego = () => {
+  modalFinDelJuego.classList.remove("ocultar") 
+}
+
+const ocultarModalBienvenida = () => {
+  modalBienvenida.classList.add("ocultar");
+}
+
+const mostrarModalBienvenida = () => {
+  modalBienvenida.classList.remove("ocultar");
+}
+
+const ocultarModalReiniciarJuego = () => {
+  modalReiniciarJuego.classList.add("ocultar")
+}
+
+const mostrarModalReiniciarJuego = () => {
+  modalReiniciarJuego.classList.remove("ocultar")
+}
+
+botonNuevoJuego.onclick = () => {
+  ocultarModalFinDelJuego()
+  mostrarModalNuevoJuego()
+}
+
+botonReiniciarJuegoFinalizado.onclick = () => {
+  ocultarModalFinDelJuego()
+  ocultarOverlay()
 }
 
 botonAJugar.onclick = () => {
-  modalBienvenida.classList.add("ocultar");
-  modalNuevoJuego.classList.remove("ocultar");
+  ocultarModalBienvenida()
+  mostrarModalNuevoJuego()
 };
 
 botonFacil.onclick = () => {
-  overlay.classList.add("ocultar");
-  modalNuevoJuego.classList.add("ocultar");
+  ocultarOverlay()
+  ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   generarGrilla(9);
   agregarGrillaAHTML(9);
@@ -81,8 +121,8 @@ botonFacil.onclick = () => {
 };
 
 botonNormal.onclick = () => {
-  overlay.classList.add("ocultar");
-  modalNuevoJuego.classList.add("ocultar");
+  ocultarOverlay()
+  ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   generarGrilla(8);
   agregarGrillaAHTML(8);
@@ -92,8 +132,8 @@ botonNormal.onclick = () => {
 };
 
 botonDificil.onclick = () => {
-  overlay.classList.add("ocultar");
-  modalNuevoJuego.classList.add("ocultar");
+  ocultarOverlay()
+  ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   generarGrilla(7);
   agregarGrillaAHTML(7);
@@ -103,22 +143,22 @@ botonDificil.onclick = () => {
 };
 
 botonInfo.onclick = () => {
-  overlay.classList.remove("ocultar")
-  modalBienvenida.classList.remove("ocultar")
+  mostrarOverlay()
+  mostrarModalBienvenida()
 }
 
 botonReiniciarJuego.onclick = () => {
-  overlay.classList.remove("ocultar")
-  modalReiniciarJuego.classList.remove("ocultar")
+  mostrarOverlay()
+  mostrarModalReiniciarJuego()
 }
 
 botonCancelarReinicioJuego.onclick = () => {
-  overlay.classList.add("ocultar")
-  modalReiniciarJuego.classList.add("ocultar")
+  ocultarOverlay()
+  ocultarModalReiniciarJuego()
 }
 
 botonNuevoJuegoReiniciado.onclick = () => {
-  modalNuevoJuego.classList.remove("ocultar")
+  mostrarModalNuevoJuego()
 }
 
 const chequearSiSeOcultaModalReiniciar = () => {
@@ -126,7 +166,7 @@ const chequearSiSeOcultaModalReiniciar = () => {
 
   }
   else {
-    modalReiniciarJuego.classList.add("ocultar")
+    ocultarModalReiniciarJuego()
   }
 }
 
