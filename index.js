@@ -47,11 +47,21 @@ const botonNuevoJuego = document.getElementById("boton-nuevo-juego")
 const botonReiniciarJuegoFinalizado = document.getElementById("boton-reiniciar-juego-terminado")
 
 const botonInfo = document.getElementById("boton-ayuda")
+const modalInfo = document.getElementById("modal-info")
+const botonSeguirJugando = document.getElementById("boton-jugar-info")
 const botonReiniciarJuego = document.getElementById("boton-reiniciar-juego")
 
 const modalReiniciarJuego = document.getElementById("modal-reiniciar")
 const botonCancelarReinicioJuego = document.getElementById("boton-cancelar")
 const botonNuevoJuegoReiniciado = document.getElementById("boton-nuevo-juego-reiniciado")
+
+const mostrarModalInformacionDeJuego = () => {
+  modalInfo.classList.remove("ocultar")
+}
+
+const ocultarModalInformacionDeJuego = () => {
+  modalInfo.classList.add("ocultar")
+}
 
 const ocultarOverlay = () => {
   overlay.classList.add("ocultar");
@@ -93,6 +103,8 @@ const mostrarModalReiniciarJuego = () => {
   modalReiniciarJuego.classList.remove("ocultar")
 }
 
+let dificultad = ''
+
 botonNuevoJuego.onclick = () => {
   ocultarModalFinDelJuego()
   mostrarModalNuevoJuego()
@@ -101,6 +113,7 @@ botonNuevoJuego.onclick = () => {
 botonReiniciarJuegoFinalizado.onclick = () => {
   ocultarModalFinDelJuego()
   ocultarOverlay()
+  reiniciarJuego(dificultad)
 }
 
 botonAJugar.onclick = () => {
@@ -109,11 +122,13 @@ botonAJugar.onclick = () => {
 };
 
 botonFacil.onclick = () => {
+  dificultad = 9 
   ocultarOverlay()
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
-  generarGrilla(9);
-  agregarGrillaAHTML(9);
+  limpiarGrillas()
+  generarGrilla(dificultad);
+  agregarGrillaAHTML(dificultad);
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
@@ -121,22 +136,26 @@ botonFacil.onclick = () => {
 };
 
 botonNormal.onclick = () => {
+  dificultad = 8
   ocultarOverlay()
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
-  generarGrilla(8);
-  agregarGrillaAHTML(8);
+  limpiarGrillas()
+  generarGrilla(dificultad);
+  agregarGrillaAHTML(dificultad);
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
 };
 
 botonDificil.onclick = () => {
+  dificultad = 7
   ocultarOverlay()
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
-  generarGrilla(7);
-  agregarGrillaAHTML(7);
+  limpiarGrillas()
+  generarGrilla(dificultad);
+  agregarGrillaAHTML(dificultad);
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
@@ -144,7 +163,12 @@ botonDificil.onclick = () => {
 
 botonInfo.onclick = () => {
   mostrarOverlay()
-  mostrarModalBienvenida()
+  mostrarModalInformacionDeJuego()
+}
+
+botonSeguirJugando.onclick = () => {
+  ocultarOverlay()
+  ocultarModalInformacionDeJuego()
 }
 
 botonReiniciarJuego.onclick = () => {
@@ -158,7 +182,8 @@ botonCancelarReinicioJuego.onclick = () => {
 }
 
 botonNuevoJuegoReiniciado.onclick = () => {
-  mostrarModalNuevoJuego()
+  ocultarOverlay()
+  reiniciarJuego(dificultad)
 }
 
 const chequearSiSeOcultaModalReiniciar = () => {
@@ -170,6 +195,7 @@ const chequearSiSeOcultaModalReiniciar = () => {
   }
 }
 
+ 
 //GRILLA ///////////////////////////////////////////////
 
 const grillaHTML = document.querySelector(".grilla");
@@ -190,6 +216,7 @@ const generarGrilla = (dificultad) => {
       grilla[i][j] = obtenerFrutaAlAzar(frutas);
     }
   }
+  console.log(grilla)
   return grilla;
 };
 
@@ -220,6 +247,21 @@ const agregarGrillaAHTML = (dificultad) => {
     }
   }
 };
+
+const limpiarGrillas = () => {
+  grilla = []
+  grillaHTML.innerHTML = ''
+}
+
+const reiniciarJuego = (dificultad) => {
+  limpiarGrillas()
+  chequearSiSeOcultaModalReiniciar()
+  generarGrilla(dificultad);
+  agregarGrillaAHTML(dificultad);
+  actualizarReloj()
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
+}
 
 
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
