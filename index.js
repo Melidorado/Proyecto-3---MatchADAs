@@ -31,6 +31,7 @@ const actualizarReloj = () => {
 };
 
 
+
 //MODALES ///////////////////////////////////////////////
 const overlay = document.querySelector(".overlay");
 
@@ -117,7 +118,7 @@ botonFacil.onclick = () => {
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
-
+  seleccionarItem()
 };
 
 botonNormal.onclick = () => {
@@ -129,6 +130,7 @@ botonNormal.onclick = () => {
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
+  seleccionarItem()
 };
 
 botonDificil.onclick = () => {
@@ -140,6 +142,7 @@ botonDificil.onclick = () => {
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
+  seleccionarItem()
 };
 
 botonInfo.onclick = () => {
@@ -150,6 +153,7 @@ botonInfo.onclick = () => {
 botonReiniciarJuego.onclick = () => {
   mostrarOverlay()
   mostrarModalReiniciarJuego()
+  seleccionarItem()
 }
 
 botonCancelarReinicioJuego.onclick = () => {
@@ -225,7 +229,6 @@ const agregarGrillaAHTML = (dificultad) => {
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
 
 
-
 const encontrarMatchHorizontal = () => {
 
   for (let i = 0; i < grilla.length; i++) {
@@ -269,6 +272,21 @@ const encontrarMatchVertical = () => {
   }
 
 }
+
+/// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
+
+const seleccionarItem = () => {
+  const emojisFrutasHTML = document.querySelectorAll(".emoji")
+  
+  for (const emoji of emojisFrutasHTML) {
+    emoji.onclick = () => {
+      emoji.classList.toggle("seleccionado")
+    }
+  }
+}
+
+
+
 
 
 

@@ -196,6 +196,7 @@ body {
 }
 
 /* ///////////////////////////////////////////////////////////////////////// */
+
 .ocultar {
     display: none;
 }
@@ -212,5 +213,10 @@ body {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+}
+
+
+.seleccionado {
+    border: 1px solid #ffffff;
 }
 
