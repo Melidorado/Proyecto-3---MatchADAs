@@ -17,19 +17,64 @@ const actualizarReloj = () => {
 
     segundosIniciales--;
 
+    // document.cron.onclick = stop;
+    // let marcha = 0;
+    // const stop = () => {
+    //   if (marcha == 1) {
+    //     clearInterval();
+    //   }
+    // };
+
     if (segundosIniciales > -1) {
       setTimeout(timer, 1000);
     }
-
     if (segundosTotales == 00) {
-      mostrarOverlay()
-      mostrarModalFinDelJuego()
+      mostrarOverlay();
+      mostrarModalFinDelJuego();
     }
-    
   };
+  document.getElementById("boton-ayuda").addEventListener("click", () => {
+    clearInterval(timer);
+  });
+
   timer();
 };
 
+///
+///
+///
+// let duracionPartida = 30;
+// let segundosRestantes = 0;
+// let timer = null;
+
+// // const $ = (selector) => document.querySelector(selector);
+
+// const segundosAMinutos = (segundos) =>
+//   Math.floor(segundos / 60) + ":" + ("0" + Math.floor(segundos % 60)).slice(-2);
+
+// const actualizarTiempoRestante = () => {
+//   const tiempoRestante = document.querySelector(".temporizador");
+//   tiempoRestante.innerHTML = segundosAMinutos(segundosRestantes);
+// };
+// const reiniciarTimer = () => {
+//   clearInterval(timer);
+//   actualizarTiempoRestante();
+
+//   timer = setInterval(() => {
+//     if (segundosRestantes > 0) {
+//       segundosRestantes -= 1;
+//       actualizarTiempoRestante();
+//     } else {
+//       if (puedeMover) {
+//         finalizarJuego();
+//       }
+//     }
+//   }, 1000);
+// };
+
+// const pausarActualizarReloj = () =>{
+//   clearTimeout
+// }
 
 //MODALES ///////////////////////////////////////////////
 const overlay = document.querySelector(".overlay");
@@ -42,133 +87,134 @@ const botonFacil = document.getElementById("boton-facil");
 const botonNormal = document.getElementById("boton-normal");
 const botonDificil = document.getElementById("boton-dificil");
 
-const modalFinDelJuego = document.getElementById("modal-fin-juego")
-const botonNuevoJuego = document.getElementById("boton-nuevo-juego")
-const botonReiniciarJuegoFinalizado = document.getElementById("boton-reiniciar-juego-terminado")
+const modalFinDelJuego = document.getElementById("modal-fin-juego");
+const botonNuevoJuego = document.getElementById("boton-nuevo-juego");
+const botonReiniciarJuegoFinalizado = document.getElementById(
+  "boton-reiniciar-juego-terminado"
+);
 
-const botonInfo = document.getElementById("boton-ayuda")
-const botonReiniciarJuego = document.getElementById("boton-reiniciar-juego")
+const botonInfo = document.getElementById("boton-ayuda");
+const botonReiniciarJuego = document.getElementById("boton-reiniciar-juego");
 
-const modalReiniciarJuego = document.getElementById("modal-reiniciar")
-const botonCancelarReinicioJuego = document.getElementById("boton-cancelar")
-const botonNuevoJuegoReiniciado = document.getElementById("boton-nuevo-juego-reiniciado")
+const modalReiniciarJuego = document.getElementById("modal-reiniciar");
+const botonCancelarReinicioJuego = document.getElementById("boton-cancelar");
+const botonNuevoJuegoReiniciado = document.getElementById(
+  "boton-nuevo-juego-reiniciado"
+);
 
 const ocultarOverlay = () => {
   overlay.classList.add("ocultar");
-}
+};
 
 const mostrarOverlay = () => {
-  overlay.classList.remove("ocultar")
-}
+  overlay.classList.remove("ocultar");
+};
 
 const ocultarModalNuevoJuego = () => {
   modalNuevoJuego.classList.add("ocultar");
-}
+};
 
 const mostrarModalNuevoJuego = () => {
-  modalNuevoJuego.classList.remove("ocultar")
-}
+  modalNuevoJuego.classList.remove("ocultar");
+};
 
 const ocultarModalFinDelJuego = () => {
-  modalFinDelJuego.classList.add("ocultar")
-}
+  modalFinDelJuego.classList.add("ocultar");
+};
 
 const mostrarModalFinDelJuego = () => {
-  modalFinDelJuego.classList.remove("ocultar") 
-}
+  modalFinDelJuego.classList.remove("ocultar");
+};
 
 const ocultarModalBienvenida = () => {
   modalBienvenida.classList.add("ocultar");
-}
+};
 
 const mostrarModalBienvenida = () => {
   modalBienvenida.classList.remove("ocultar");
-}
+};
 
 const ocultarModalReiniciarJuego = () => {
-  modalReiniciarJuego.classList.add("ocultar")
-}
+  modalReiniciarJuego.classList.add("ocultar");
+};
 
 const mostrarModalReiniciarJuego = () => {
-  modalReiniciarJuego.classList.remove("ocultar")
-}
+  modalReiniciarJuego.classList.remove("ocultar");
+};
 
 botonNuevoJuego.onclick = () => {
-  ocultarModalFinDelJuego()
-  mostrarModalNuevoJuego()
-}
+  ocultarModalFinDelJuego();
+  mostrarModalNuevoJuego();
+};
 
 botonReiniciarJuegoFinalizado.onclick = () => {
-  ocultarModalFinDelJuego()
-  ocultarOverlay()
-}
+  ocultarModalFinDelJuego();
+  ocultarOverlay();
+};
 
 botonAJugar.onclick = () => {
-  ocultarModalBienvenida()
-  mostrarModalNuevoJuego()
+  ocultarModalBienvenida();
+  mostrarModalNuevoJuego();
 };
 
 botonFacil.onclick = () => {
-  ocultarOverlay()
-  ocultarModalNuevoJuego()
-  chequearSiSeOcultaModalReiniciar()
+  ocultarOverlay();
+  ocultarModalNuevoJuego();
+  chequearSiSeOcultaModalReiniciar();
   generarGrilla(9);
   agregarGrillaAHTML(9);
-  actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-
+  actualizarReloj();
+  encontrarMatchHorizontal();
+  encontrarMatchVertical();
 };
 
 botonNormal.onclick = () => {
-  ocultarOverlay()
-  ocultarModalNuevoJuego()
-  chequearSiSeOcultaModalReiniciar()
+  ocultarOverlay();
+  ocultarModalNuevoJuego();
+  chequearSiSeOcultaModalReiniciar();
   generarGrilla(8);
   agregarGrillaAHTML(8);
-  actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
+  actualizarReloj();
+  encontrarMatchHorizontal();
+  encontrarMatchVertical();
 };
 
 botonDificil.onclick = () => {
-  ocultarOverlay()
-  ocultarModalNuevoJuego()
-  chequearSiSeOcultaModalReiniciar()
+  ocultarOverlay();
+  ocultarModalNuevoJuego();
+  chequearSiSeOcultaModalReiniciar();
   generarGrilla(7);
   agregarGrillaAHTML(7);
-  actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
+  actualizarReloj();
+  encontrarMatchHorizontal();
+  encontrarMatchVertical();
 };
 
 botonInfo.onclick = () => {
-  mostrarOverlay()
-  mostrarModalBienvenida()
-}
+  mostrarOverlay();
+  mostrarModalBienvenida();
+};
 
 botonReiniciarJuego.onclick = () => {
-  mostrarOverlay()
-  mostrarModalReiniciarJuego()
-}
+  mostrarOverlay();
+  mostrarModalReiniciarJuego();
+};
 
 botonCancelarReinicioJuego.onclick = () => {
-  ocultarOverlay()
-  ocultarModalReiniciarJuego()
-}
+  ocultarOverlay();
+  ocultarModalReiniciarJuego();
+};
 
 botonNuevoJuegoReiniciado.onclick = () => {
-  mostrarModalNuevoJuego()
-}
+  mostrarModalNuevoJuego();
+};
 
 const chequearSiSeOcultaModalReiniciar = () => {
   if (modalReiniciarJuego.classList.contains("ocultar")) {
-
+  } else {
+    ocultarModalReiniciarJuego();
   }
-  else {
-    ocultarModalReiniciarJuego()
-  }
-}
+};
 
 //GRILLA ///////////////////////////////////////////////
 
@@ -199,10 +245,10 @@ const generarCuadrado = (x, y, array, dificultad) => {
   const cuadrado = document.createElement("div");
   cuadrado.dataset.x = x;
   cuadrado.dataset.y = y;
-  cuadrado.classList.add("emoji")
-  cuadrado.innerHTML = `<div style="font-size: ${
-    tamanio - 10
-  }px;"> ${array[x][y]} </div>`;
+  cuadrado.classList.add("emoji");
+  cuadrado.innerHTML = `<div style="font-size: ${tamanio - 10}px;"> ${
+    array[x][y]
+  } </div>`;
   cuadrado.style.top = `${x * tamanio}px`;
   cuadrado.style.left = `${y * tamanio}px`;
   cuadrado.style.width = `${tamanio}px`;
@@ -221,54 +267,54 @@ const agregarGrillaAHTML = (dificultad) => {
   }
 };
 
-
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
 
-
-
 const encontrarMatchHorizontal = () => {
-
   for (let i = 0; i < grilla.length; i++) {
-      
     for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i}'][data-y='${j + 1}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i}'][data-y='${j + 2}']`)
-        emoji.style.backgroundColor = 'yellow'
-        emoji1.style.backgroundColor = 'yellow'
-        emoji2.style.backgroundColor = 'yellow'    
-                    
+      if (
+        grilla[i][j] === grilla[i][j + 1] &&
+        grilla[i][j + 1] === grilla[i][j + 2]
+      ) {
+        const emoji = document.querySelector(
+          `div[data-x='${i}'][data-y='${j}']`
+        );
+        const emoji1 = document.querySelector(
+          `div[data-x='${i}'][data-y='${j + 1}']`
+        );
+        const emoji2 = document.querySelector(
+          `div[data-x='${i}'][data-y='${j + 2}']`
+        );
+        emoji.style.backgroundColor = "yellow";
+        emoji1.style.backgroundColor = "yellow";
+        emoji2.style.backgroundColor = "yellow";
       }
-               
     }
-      
   }
-  
-}
-
+};
 
 const encontrarMatchVertical = () => {
   for (let i = 0; i < grilla.length; i++) {
-      
     for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i + 1}'][data-y='${j}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i + 2}'][data-y='${j}']`)
-        emoji.style.backgroundColor = 'orange'
-        emoji1.style.backgroundColor = 'orange'
-        emoji2.style.backgroundColor = 'orange'    
-                    
+      if (
+        grilla[i + 1] &&
+        grilla[i + 2] &&
+        grilla[i][j] === grilla[i + 1][j] &&
+        grilla[i + 1][j] === grilla[i + 2][j]
+      ) {
+        const emoji = document.querySelector(
+          `div[data-x='${i}'][data-y='${j}']`
+        );
+        const emoji1 = document.querySelector(
+          `div[data-x='${i + 1}'][data-y='${j}']`
+        );
+        const emoji2 = document.querySelector(
+          `div[data-x='${i + 2}'][data-y='${j}']`
+        );
+        emoji.style.backgroundColor = "orange";
+        emoji1.style.backgroundColor = "orange";
+        emoji2.style.backgroundColor = "orange";
       }
-               
     }
-      
   }
-
-}
-
-
-
+};
