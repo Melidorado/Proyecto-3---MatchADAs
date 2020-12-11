@@ -17,14 +17,6 @@ const actualizarReloj = () => {
 
     segundosIniciales--;
 
-    // document.cron.onclick = stop;
-    // let marcha = 0;
-    // const stop = () => {
-    //   if (marcha == 1) {
-    //     clearInterval();
-    //   }
-    // };
-
     if (segundosIniciales > -1) {
       setTimeout(timer, 1000);
     }
@@ -41,40 +33,6 @@ const actualizarReloj = () => {
 };
 
 ///
-///
-///
-// let duracionPartida = 30;
-// let segundosRestantes = 0;
-// let timer = null;
-
-// // const $ = (selector) => document.querySelector(selector);
-
-// const segundosAMinutos = (segundos) =>
-//   Math.floor(segundos / 60) + ":" + ("0" + Math.floor(segundos % 60)).slice(-2);
-
-// const actualizarTiempoRestante = () => {
-//   const tiempoRestante = document.querySelector(".temporizador");
-//   tiempoRestante.innerHTML = segundosAMinutos(segundosRestantes);
-// };
-// const reiniciarTimer = () => {
-//   clearInterval(timer);
-//   actualizarTiempoRestante();
-
-//   timer = setInterval(() => {
-//     if (segundosRestantes > 0) {
-//       segundosRestantes -= 1;
-//       actualizarTiempoRestante();
-//     } else {
-//       if (puedeMover) {
-//         finalizarJuego();
-//       }
-//     }
-//   }, 1000);
-// };
-
-// const pausarActualizarReloj = () =>{
-//   clearTimeout
-// }
 
 //MODALES ///////////////////////////////////////////////
 const overlay = document.querySelector(".overlay");
