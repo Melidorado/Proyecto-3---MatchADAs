@@ -224,50 +224,54 @@ const agregarGrillaAHTML = (dificultad) => {
 
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
 
-
-
 const encontrarMatchHorizontal = () => {
 
   for (let i = 0; i < grilla.length; i++) {
       
     for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i}'][data-y='${j + 1}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i}'][data-y='${j + 2}']`)
-        emoji.style.backgroundColor = 'yellow'
-        emoji1.style.backgroundColor = 'yellow'
-        emoji2.style.backgroundColor = 'yellow'    
-                    
-      }
-               
-    }
-      
+      let iguales = 0
+
+      for (let k = j; k <= grilla[i].length; k++) {
+        if (grilla[i][j] === grilla[i][k]) {
+          iguales++
+        }
+        else {
+          if (iguales >= 3) {
+            return {
+              x: j, y: i, columnas: iguales
+            }
+          }
+          else {
+            iguales = 1
+            j = k
+          }
+        }
+      }          
+    }   
   }
-  
 }
 
-
 const encontrarMatchVertical = () => {
-  for (let i = 0; i < grilla.length; i++) {
+  for (let j = 0; j < grilla[0].length; j++) {
+    for (let i = 0; i < grilla.length; i++) {
+      let iguales = 0
       
-    for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i + 1}'][data-y='${j}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i + 2}'][data-y='${j}']`)
-        emoji.style.backgroundColor = 'orange'
-        emoji1.style.backgroundColor = 'orange'
-        emoji2.style.backgroundColor = 'orange'    
-                    
+      for (let k = i; k <= grilla.length; k++) {
+        if (grilla[k] && grilla[i][j] === grilla[k][j]) {
+          iguales++
+        }
+        else {
+          if (iguales >= 3) {
+            return {
+              x: j; y: i; filas: iguales
+            }
+          }
+          iguales = 1
+          i = k
+        }        
       }
-               
     }
-      
   }
-
 }
 
 
