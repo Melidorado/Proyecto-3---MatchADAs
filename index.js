@@ -284,8 +284,7 @@ const encontrarMatchHorizontal = () => {
     eliminarMatchesHTML(obtenerCuadrado(matchesHorizontales[i]))
   }
   eliminarMatchesJS(matchesHorizontales)
-  /* eliminarMatchesHTML(matchesHorizontales) */
-  insertarMatchesEliminadosJS()
+  insertarMatchesEliminadosHorizontalesJS()
   
   console.log(matchesHorizontales)
   
@@ -314,6 +313,7 @@ const encontrarMatchVertical = () => {
     eliminarMatchesHTML(obtenerCuadrado(matchesVerticales[i]))
   }
   eliminarMatchesJS(matchesVerticales)
+  insertarMatchesEliminadosVerticalesJS()
   console.log(matchesVerticales)
   console.log(grilla)
 
@@ -331,7 +331,7 @@ const eliminarMatchesJS = (array) => {
   }
 }
 
-const insertarMatchesEliminadosJS = () => {
+const insertarMatchesEliminadosHorizontalesJS = () => {
   for (let i = 0; i < grilla.length; i++) {
     for (let j = 0; j < grilla[i].length; j++) {
        if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
@@ -343,6 +343,19 @@ const insertarMatchesEliminadosJS = () => {
     }
   }
 }
+
+const insertarMatchesEliminadosVerticalesJS = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
+        grilla[i][j] = null
+        grilla[i + 1][j] = null
+        grilla[i + 2][j] = null
+      }         
+    } 
+  }
+}
+
 
 
 
