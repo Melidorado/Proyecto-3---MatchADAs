@@ -263,7 +263,7 @@ const encontrarMatchVertical = () => {
         else {
           if (iguales >= 3) {
             return {
-              x: j; y: i; filas: iguales
+              x: j, y: i, filas: iguales
             }
           }
           iguales = 1
@@ -274,5 +274,38 @@ const encontrarMatchVertical = () => {
   }
 }
 
+const buscarBloques = () => {
+  const bloqueHorizontal = encontrarMatchHorizontal()
+  const bloqueVertical = encontrarMatchVertical()
 
+  if (bloqueHorizontal && bloqueVertical) {
+    return [bloqueHorizontal, bloqueVertical]
+  }
+  else if (bloqueHorizontal) {
+    return [bloqueHorizontal]
+  }
+  else if (bloqueVertical) {
+    return [bloqueVertical]
+  }
+  else {
+    return null
+  }
+}
 
+// ELIMINAR BLOQUES
+
+const eliminarBloques = () => {
+  const bloque = buscarBloques()
+  puedeMover = false
+
+  if (bloque) {
+    eliminarBloque(bloque)
+  }
+  else {
+    puedeMover = true
+  }
+}
+
+const eliminarBloque = (bloques) => {
+
+}
