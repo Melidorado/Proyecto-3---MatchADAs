@@ -269,48 +269,81 @@ const reiniciarJuego = (dificultad) => {
 
 
 const encontrarMatchHorizontal = () => {
-
+  let matchesHorizontales = []
   for (let i = 0; i < grilla.length; i++) {
-      
     for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i}'][data-y='${j + 1}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i}'][data-y='${j + 2}']`)
-        emoji.style.backgroundColor = 'yellow'
-        emoji1.style.backgroundColor = 'yellow'
-        emoji2.style.backgroundColor = 'yellow'    
-                    
-      }
-               
-    }
-      
+       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+        matchesHorizontales.push([i, j]);
+        matchesHorizontales.push([i, j + 1]);
+        matchesHorizontales.push([i, j + 2]);
+      }         
+    } 
   }
+  
+  for (let i = 0; i < matchesHorizontales.length; i++) {
+    eliminarMatchesHTML(obtenerCuadrado(matchesHorizontales[i]))
+  }
+  eliminarMatchesJS(matchesHorizontales)
+  /* eliminarMatchesHTML(matchesHorizontales) */
+  insertarMatchesEliminadosJS()
+  
+  console.log(matchesHorizontales)
   
 }
 
+const obtenerCuadrado = arr => {
+  return document.querySelector(
+    `div[data-x='${arr[0]}'][data-y='${arr[1]}']`,
+  );
+};
+
 
 const encontrarMatchVertical = () => {
+  let matchesVerticales = []
   for (let i = 0; i < grilla.length; i++) {
-      
     for (let j = 0; j < grilla[i].length; j++) {
-       
-      if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
-        const emoji1 = document.querySelector(`div[data-x='${i + 1}'][data-y='${j}']`)
-        const emoji2 = document.querySelector(`div[data-x='${i + 2}'][data-y='${j}']`)
-        emoji.style.backgroundColor = 'orange'
-        emoji1.style.backgroundColor = 'orange'
-        emoji2.style.backgroundColor = 'orange'    
-                    
-      }
-               
-    }
-      
+       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
+        matchesVerticales.push([i, j]);
+        matchesVerticales.push([i + 1, j]);
+        matchesVerticales.push([i + 2, j]);
+      }         
+    } 
   }
 
+  for (let i = 0; i < matchesVerticales.length; i++) {
+    eliminarMatchesHTML(obtenerCuadrado(matchesVerticales[i]))
+  }
+  eliminarMatchesJS(matchesVerticales)
+  console.log(matchesVerticales)
+  console.log(grilla)
+
 }
+
+const eliminarMatchesHTML = (array) => {
+  for (let child of array.children) {
+    array.removeChild(child)
+  }
+}
+
+const eliminarMatchesJS = (array) => {
+  for (let i = 0; i < array.length; i++) {
+    array[i] = null
+  }
+}
+
+const insertarMatchesEliminadosJS = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+        grilla[i][j] = null
+        grilla[i][j + 1] = null
+        grilla[i][j + 2] = null
+
+      }
+    }
+  }
+}
+
 
 
 
