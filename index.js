@@ -278,14 +278,100 @@ const encontrarMatchVertical = () => {
 const seleccionarItem = () => {
   const emojis = document.querySelectorAll(".emoji")
   
-  for (let emoji of emojis) {
-    emoji.onclick = () => {
-      emoji.classList.add("seleccionado")
+  for (let primerEmoji of emojis) {
+    primerEmoji.onclick = () => {
+      console.log("entraste al for del primer emoji seleccionado")
+
+      for (let segundoEmoji of emojis) {
+        segundoEmoji.onclick = () => {
+          console.log("entraste al for del segundo emoji seleccionado")
+          if (sonAdyacentes(primerEmoji, segundoEmoji)) {
+            //chequear si los emojis seleccionados son adyacentes
+            console.log("chequeando si son adyacentes")
+            console.log(sonAdyacentes(primerEmoji, segundoEmoji))
+            //si son adyacentes, cambiar de posicion
+            intercambiarEmojis(primerEmoji, segundoEmoji)
+            console.log("se deberian intercambiar emojis")
+            //chequear si hay match
+              if (hayMatch()) {
+                //lo que armo meli va aca! (eliminar emojis)
+              }
+            else {
+              //volver emojis a donde estaban
+            }
+          }
+          else {
+            //si no son adyacentes quitar clase ".seleccionado"
+            primerEmoji.classList.remove("seleccionado")
+            segundoEmoji.classList.remove("seleccionado")
+          }
+          segundoEmoji.classList.add("seleccionado")
+          console.log("el segundo emoji deberia seleccionarse")
+        }
+      } 
+      primerEmoji.classList.add("seleccionado")
     }
   }
 }
 
+/// SON ADYACENTES //////////////////////////////////////////////////////////
 
+const sonAdyacentes = (emoji1, emoji2) => {
+
+  if ((Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y + 1))
+      || (Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y - 1))
+      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x + 1))
+      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x - 1))) {
+      return true
+  }
+  else {
+      return false
+  }
+}
+
+/// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
+
+const intercambiarEmojis = (emoji1, emoji2) => {
+
+  const datax1 = Number(emoji1.dataset.x)
+  const datay1 = Number(emoji1.dataset.y)
+  const datax2 = Number(emoji2.dataset.x)
+  const datay2 = Number(emoji2.dataset.y)
+
+  //MODIFICAR GRILLA EN JS
+  let variableTemporal = grilla[datax1][datay1]
+    grilla[datax1][datay1] = grilla[datax2][datay2]
+    grilla[datax2][datay2] = variableTemporal
+
+  //MODIFICAR GRILLA EN HTML
+  if (datax1 === datax2 && (datay1 === datay2 + 1 || datay1 === datay2 - 1)) {
+    
+    emoji1.style.left = `${datay2 * tamanio}px`
+    emoji2.style.left = `${datay1 * tamanio}px`
+    emoji1.dataset.y = datay2
+    emoji2.dataset.y = datay1
+  }
+  else if (datay1 === datay2 && (datax1 === datax2 + 1 || datax1 === datax2 - 1)) {
+    emoji1.dataset.x = datax2;
+    emoji2.dataset.x = datax1;
+    emoji1.style.top = `${datax2 * tamanio}px`;
+    emoji2.style.top = `${datax1 * tamanio}px`;
+  }
+}
+
+
+/// HAY MATCHES //////////////////////////////////////////////////////////
+
+// const hayMatch = () => {
+//   if (encontrarMatchHorizontal() || encontrarMatchVertical) {
+//     console.log("hay match")
+//     return true
+//   }
+//   else {
+//     console.log("no hay match")
+//     return false
+//   }
+// }
 
 
 
