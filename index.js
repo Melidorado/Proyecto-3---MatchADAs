@@ -285,18 +285,18 @@ const seleccionarItem = () => {
 
       for (let segundoEmoji of emojis) {
         segundoEmoji.onclick = () => {
+          console.log("entraste al for del segundo emoji seleccionado")
           if (sonAdyacentes(primerEmoji, segundoEmoji)) {
+            //chequear si los emojis seleccionados son adyacentes
             console.log("chequeando si son adyacentes")
             console.log(sonAdyacentes(primerEmoji, segundoEmoji))
-            //chequear si los emojis seleccionados son adyacentes
             //si son adyacentes, cambiar de posicion
-  
-            // intercambiarEmojis(emoji, emojiSeleccionado)
-  
+            intercambiarEmojis(primerEmoji, segundoEmoji)
+            console.log("se deberian intercambiar emojis")
             //chequear si hay match
-            if (hayMatch) {
-              //lo que armo meli va aca! (eliminar emojis)
-            }
+              if (hayMatch()) {
+                //lo que armo meli va aca! (eliminar emojis)
+              }
             else {
               //volver emojis a donde estaban
             }
@@ -304,8 +304,11 @@ const seleccionarItem = () => {
           else {
             //si no son adyacentes quitar clase ".seleccionado"
             primerEmoji.classList.remove("seleccionado")
+            segundoEmoji.classList.remove("seleccionado")
             //anular emoji seleccionado
           }
+          segundoEmoji.classList.add("seleccionado")
+          console.log("el segundo emoji deberia seleccionarse")
         }
       } 
       primerEmoji.classList.add("seleccionado")
@@ -334,3 +337,33 @@ const sonAdyacentes = (emoji1, emoji2) => {
 
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
+const intercambiarEmojis = (emoji1, emoji2) => {
+
+  const datax1 = Number(emoji1.dataset.x)
+  const datay1 = Number(emoji1.dataset.y)
+  const datax2 = Number(emoji2.dataset.x)
+  const datay2 = Number(emoji2.dataset.y)
+
+  //MODIFICAR GRILLA EN JS
+  let variableTemporal = grilla[datax1][datay1]
+    grilla[datax1][datay1] = grilla[datax2][datay2]
+    grilla[datax2][datay2] = variableTemporal
+
+  //MODIFICAR GRILLA EN HTML
+  if (datax1 === datax2 && (datay1 === datay2 + 1 || datay1 === datay2 - 1)) {
+    
+    emoji1.style.left = `${datay2 * tamanio}px`
+    emoji2.style.left = `${datay1 * tamanio}px`
+    emoji1.dataset.y = datay2
+    emoji2.dataset.y = datay1
+  }
+  else if (datay1 === datay2 && (datax1 === datax2 + 1 || datax1 === datax2 - 1)) {
+    emoji1.dataset.x = datax2;
+    emoji2.dataset.x = datax1;
+    emoji1.style.top = `${datax2 * tamanio}px`;
+    emoji2.style.top = `${datax1 * tamanio}px`;
+  }
+}
+
+
+/// HAY MATCHES //////////////////////////////////////////////////////////
