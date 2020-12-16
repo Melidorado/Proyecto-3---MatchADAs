@@ -275,32 +275,38 @@ const encontrarMatchVertical = () => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 let emojiSeleccionado = null;
+console.log(emojiSeleccionado)
 
 const seleccionarItem = () => {
   const emojis = document.querySelectorAll(".emoji")
   
   for (let emoji of emojis) {
     emoji.onclick = () => {
+      console.log("entraste al for")
       if (emojiSeleccionado) {
         //guardar emoji seleccionado
-        if (sonAdyacentes()) {
-        //chequear si los emojis seleccionados son adyacentes
-        //si son adyacentes, cambiar de posicion
-        intercambiarEmojis(emoji, emojiSeleccionado)
-        //chequear si hay match
+        console.log(emojiSeleccionado)
+        if (sonAdyacentes(emoji, emojiSeleccionado)) {
+          console.log("chequeando si son adyacentes")
+          //chequear si los emojis seleccionados son adyacentes
+          //si son adyacentes, cambiar de posicion
+
+          // intercambiarEmojis(emoji, emojiSeleccionado)
+
+          //chequear si hay match
           if (hayMatch) {
             //lo que armo meli va aca! (eliminar emojis)
           }
           else {
             //volver emojis a donde estaban
-            let primerEmojiSeleccionado = emojiSeleccionado
-            setTimeout(() => intercambiarEmojis(emoji, primerEmojiSeleccionado), 550)
           }
         }
-        //si no son adyacentes quitar clase ".seleccionado"
-        emojiSeleccionado.classList.remove("seleccionado")
-        //anular emoji seleccionado
-        emojiSeleccionado = null
+        else {
+          //si no son adyacentes quitar clase ".seleccionado"
+          emojiSeleccionado.classList.remove("seleccionado")
+          //anular emoji seleccionado
+          emojiSeleccionado = null
+        }
       }
       else {
       emoji.classList.add("seleccionado")
@@ -309,8 +315,24 @@ const seleccionarItem = () => {
   }
 }
 
-
 //DEFINIR sonAdyacentes
 //DEFINIR intercambiarEmojis
+//DEFINIR hayMatch
 
+/// SON ADYACENTES //////////////////////////////////////////////////////////
+
+const sonAdyacentes = (emoji1, emoji2) => {
+
+  if ((Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y + 1))
+      || (Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y - 1))
+      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x + 1))
+      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x - 1))) {
+      return true
+  }
+  else {
+      return false
+  }
+}
+
+/// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
