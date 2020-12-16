@@ -276,11 +276,11 @@ const encontrarMatchVertical = () => {
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
 const seleccionarItem = () => {
-  const emojisFrutasHTML = document.querySelectorAll(".emoji")
+  const emojis = document.querySelectorAll(".emoji")
   
-  for (const emoji of emojisFrutasHTML) {
+  for (let emoji of emojis) {
     emoji.onclick = () => {
-      emoji.classList.toggle("seleccionado")
+      emoji.classList.add("seleccionado")
     }
   }
 }
