@@ -274,19 +274,43 @@ const encontrarMatchVertical = () => {
 }
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
+let emojiSeleccionado = null;
 
 const seleccionarItem = () => {
   const emojis = document.querySelectorAll(".emoji")
   
   for (let emoji of emojis) {
     emoji.onclick = () => {
+      if (emojiSeleccionado) {
+        //guardar emoji seleccionado
+        if (sonAdyacentes()) {
+        //chequear si los emojis seleccionados son adyacentes
+        //si son adyacentes, cambiar de posicion
+        intercambiarEmojis(emoji, emojiSeleccionado)
+        //chequear si hay match
+          if (hayMatch) {
+            //lo que armo meli va aca! (eliminar emojis)
+          }
+          else {
+            //volver emojis a donde estaban
+            let primerEmojiSeleccionado = emojiSeleccionado
+            setTimeout(() => intercambiarEmojis(emoji, primerEmojiSeleccionado), 550)
+          }
+        }
+        //si no son adyacentes quitar clase ".seleccionado"
+        emojiSeleccionado.classList.remove("seleccionado")
+        //anular emoji seleccionado
+        emojiSeleccionado = null
+      }
+      else {
       emoji.classList.add("seleccionado")
+      }
     }
   }
 }
 
 
-
-
+//DEFINIR sonAdyacentes
+//DEFINIR intercambiarEmojis
 
 
