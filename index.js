@@ -275,7 +275,6 @@ const encontrarMatchVertical = () => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-
 const seleccionarItem = () => {
   const emojis = document.querySelectorAll(".emoji")
   
@@ -294,9 +293,9 @@ const seleccionarItem = () => {
             intercambiarEmojis(primerEmoji, segundoEmoji)
             console.log("se deberian intercambiar emojis")
             //chequear si hay match
-              if (hayMatch()) {
-                //lo que armo meli va aca! (eliminar emojis)
-              }
+            if (hayMatch()) {
+              //lo que armo meli va aca! (eliminar emojis)
+            }
             else {
               //volver emojis a donde estaban
             }
@@ -305,7 +304,6 @@ const seleccionarItem = () => {
             //si no son adyacentes quitar clase ".seleccionado"
             primerEmoji.classList.remove("seleccionado")
             segundoEmoji.classList.remove("seleccionado")
-            //anular emoji seleccionado
           }
           segundoEmoji.classList.add("seleccionado")
           console.log("el segundo emoji deberia seleccionarse")
@@ -315,10 +313,6 @@ const seleccionarItem = () => {
     }
   }
 }
-
-//DEFINIR sonAdyacentes
-//DEFINIR intercambiarEmojis
-//DEFINIR hayMatch
 
 /// SON ADYACENTES //////////////////////////////////////////////////////////
 
@@ -338,6 +332,9 @@ const sonAdyacentes = (emoji1, emoji2) => {
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
 const intercambiarEmojis = (emoji1, emoji2) => {
+
+  //tendria que definir tamaño
+  // const tamanio = 
 
   const datax1 = Number(emoji1.dataset.x)
   const datay1 = Number(emoji1.dataset.y)
@@ -367,3 +364,14 @@ const intercambiarEmojis = (emoji1, emoji2) => {
 
 
 /// HAY MATCHES //////////////////////////////////////////////////////////
+
+// const hayMatch = () => {
+//   if (encontrarMatchHorizontal() || encontrarMatchVertical) {
+//     console.log("hay match")
+//     return true
+//   }
+//   else {
+//     console.log("no hay match")
+//     return false
+//   }
+// }
