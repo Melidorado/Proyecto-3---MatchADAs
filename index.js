@@ -274,43 +274,41 @@ const encontrarMatchVertical = () => {
 }
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
-let emojiSeleccionado = null;
-console.log(emojiSeleccionado)
+
 
 const seleccionarItem = () => {
   const emojis = document.querySelectorAll(".emoji")
   
-  for (let emoji of emojis) {
-    emoji.onclick = () => {
-      console.log("entraste al for")
-      if (emojiSeleccionado) {
-        //guardar emoji seleccionado
-        console.log(emojiSeleccionado)
-        if (sonAdyacentes(emoji, emojiSeleccionado)) {
-          console.log("chequeando si son adyacentes")
-          //chequear si los emojis seleccionados son adyacentes
-          //si son adyacentes, cambiar de posicion
+  for (let primerEmoji of emojis) {
+    primerEmoji.onclick = () => {
+      console.log("entraste al for del primer emoji seleccionado")
 
-          // intercambiarEmojis(emoji, emojiSeleccionado)
-
-          //chequear si hay match
-          if (hayMatch) {
-            //lo que armo meli va aca! (eliminar emojis)
+      for (let segundoEmoji of emojis) {
+        segundoEmoji.onclick = () => {
+          if (sonAdyacentes(primerEmoji, segundoEmoji)) {
+            console.log("chequeando si son adyacentes")
+            console.log(sonAdyacentes(primerEmoji, segundoEmoji))
+            //chequear si los emojis seleccionados son adyacentes
+            //si son adyacentes, cambiar de posicion
+  
+            // intercambiarEmojis(emoji, emojiSeleccionado)
+  
+            //chequear si hay match
+            if (hayMatch) {
+              //lo que armo meli va aca! (eliminar emojis)
+            }
+            else {
+              //volver emojis a donde estaban
+            }
           }
           else {
-            //volver emojis a donde estaban
+            //si no son adyacentes quitar clase ".seleccionado"
+            primerEmoji.classList.remove("seleccionado")
+            //anular emoji seleccionado
           }
         }
-        else {
-          //si no son adyacentes quitar clase ".seleccionado"
-          emojiSeleccionado.classList.remove("seleccionado")
-          //anular emoji seleccionado
-          emojiSeleccionado = null
-        }
-      }
-      else {
-      emoji.classList.add("seleccionado")
-      }
+      } 
+      primerEmoji.classList.add("seleccionado")
     }
   }
 }
