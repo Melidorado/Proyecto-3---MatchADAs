@@ -130,8 +130,14 @@ botonFacil.onclick = () => {
   generarGrilla(dificultad);
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
+  while (chequearSiHayMatchesHorizontales()) {
+    encontrarMatchHorizontal()
+    console.log(grilla)
+  }
+  while (chequearSiHayMatchesVerticales()) {
+    encontrarMatchVertical()
+    console.log(grilla)
+  }
 
 };
 
@@ -144,8 +150,15 @@ botonNormal.onclick = () => {
   generarGrilla(dificultad);
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
+  while (chequearSiHayMatchesHorizontales()) {
+    encontrarMatchHorizontal()
+    console.log(grilla)
+  }
+  while (chequearSiHayMatchesVerticales()) {
+    encontrarMatchVertical()
+    console.log(grilla)
+  }
+
 };
 
 botonDificil.onclick = () => {
@@ -157,8 +170,15 @@ botonDificil.onclick = () => {
   generarGrilla(dificultad);
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
+  while (chequearSiHayMatchesHorizontales()) {
+    encontrarMatchHorizontal()
+    console.log(grilla)
+  }
+  while (chequearSiHayMatchesVerticales()) {
+    encontrarMatchVertical()
+    console.log(grilla)
+  }
+  
 };
 
 botonInfo.onclick = () => {
@@ -216,12 +236,13 @@ const generarGrilla = (dificultad) => {
       grilla[i][j] = obtenerFrutaAlAzar(frutas);
     }
   }
-  console.log(grilla)
   return grilla;
 };
 
+let tamanio = ""
+
 const generarCuadrado = (x, y, array, dificultad) => {
-  const tamanio = 474 / dificultad;
+  tamanio = 474 / dificultad;
 
   const cuadrado = document.createElement("div");
   cuadrado.dataset.x = x;
@@ -261,12 +282,33 @@ const reiniciarJuego = (dificultad) => {
   actualizarReloj()
   encontrarMatchHorizontal()
   encontrarMatchVertical()
+
 }
 
 
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
 
+const chequearSiHayMatchesHorizontales = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+       return true
+      }        
+    } 
+  }
+  return false
+}
 
+const chequearSiHayMatchesVerticales = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
+        return true
+      }         
+    } 
+  }
+  return false
+}
 
 const encontrarMatchHorizontal = () => {
   let matchesHorizontales = []
@@ -276,7 +318,7 @@ const encontrarMatchHorizontal = () => {
         matchesHorizontales.push([i, j]);
         matchesHorizontales.push([i, j + 1]);
         matchesHorizontales.push([i, j + 2]);
-      }         
+      }        
     } 
   }
   
@@ -285,12 +327,10 @@ const encontrarMatchHorizontal = () => {
   }
   eliminarMatchesJS(matchesHorizontales)
   insertarMatchesEliminadosHorizontalesJS()
-  
-  console.log(matchesHorizontales)
-  
+  agregarEmojiNuevoHorizontalAJS()  
 }
 
-const obtenerCuadrado = arr => {
+const obtenerCuadrado = (arr) => {
   return document.querySelector(
     `div[data-x='${arr[0]}'][data-y='${arr[1]}']`,
   );
@@ -314,9 +354,7 @@ const encontrarMatchVertical = () => {
   }
   eliminarMatchesJS(matchesVerticales)
   insertarMatchesEliminadosVerticalesJS()
-  console.log(matchesVerticales)
-  console.log(grilla)
-
+  agregarEmojiNuevoVerticalAJS()
 }
 
 const eliminarMatchesHTML = (array) => {
@@ -357,6 +395,50 @@ const insertarMatchesEliminadosVerticalesJS = () => {
 }
 
 
+const agregarEmojiNuevoHorizontalAJS = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+        grilla[i][j] = obtenerFrutaAlAzar(frutas)
+        grilla[i][j + 1] = obtenerFrutaAlAzar(frutas)
+        grilla[i][j + 2] = obtenerFrutaAlAzar(frutas)
+        agregarEmojiNuevoAHTML(grilla, [i], [j])
+        agregarEmojiNuevoAHTML(grilla, [i], [j+1])
+        agregarEmojiNuevoAHTML(grilla, [i], [j+2])
+        
 
+      }
+    }
+  }
+}
+
+const agregarEmojiNuevoVerticalAJS = () => {
+  for (let i = 0; i < grilla.length; i++) {
+    for (let j = 0; j < grilla[i].length; j++) {
+       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
+        grilla[i][j] = obtenerFrutaAlAzar(frutas)
+        grilla[i + 1][j] = obtenerFrutaAlAzar(frutas)
+        grilla[i + 2][j] = obtenerFrutaAlAzar(frutas)
+        agregarEmojiNuevoAHTML(grilla, [i], [j])
+        agregarEmojiNuevoAHTML(grilla, [i + 1], [j])
+        agregarEmojiNuevoAHTML(grilla, [i + 2], [j])
+      }         
+    } 
+  }
+}
+
+const agregarEmojiNuevoAHTML = (array, i, j) => {
+  
+  const espacioEnHTML = document.querySelector(`div[data-x='${[i]}'][data-y='${[j]}']`);
+  espacioEnHTML.innerHTML = `<div style="font-size: ${tamanio - 10}px;"> ${array[i][j]} </div>`;
+
+
+}
+
+/* const chequearSiHayMasMatches = () => {
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
+  console.log(grilla)
+} */
 
 
