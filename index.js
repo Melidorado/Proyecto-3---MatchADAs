@@ -471,6 +471,8 @@ const seleccionarItem = () => {
             }
             else {
               //volver emojis a donde estaban
+              console.log("los cuadrados deberian volver a donde estaban")
+              setTimeout(() => intercambiarEmojis(primerEmoji, segundoEmoji), 550)
             }
           }
           else {
@@ -506,18 +508,15 @@ const sonAdyacentes = (emoji1, emoji2) => {
 
 const intercambiarEmojis = (emoji1, emoji2) => {
 
-  //tendria que definir tamaño
-  // const tamanio = 
-
   const datax1 = Number(emoji1.dataset.x)
   const datay1 = Number(emoji1.dataset.y)
   const datax2 = Number(emoji2.dataset.x)
   const datay2 = Number(emoji2.dataset.y)
 
   //MODIFICAR GRILLA EN JS
-  let variableTemporal = grilla[datax1][datay1]
+  let modificoJS = grilla[datax1][datay1]
     grilla[datax1][datay1] = grilla[datax2][datay2]
-    grilla[datax2][datay2] = variableTemporal
+    grilla[datax2][datay2] = modificoJS
 
   //MODIFICAR GRILLA EN HTML
   if (datax1 === datax2 && (datay1 === datay2 + 1 || datay1 === datay2 - 1)) {
