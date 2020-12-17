@@ -537,13 +537,13 @@ const intercambiarEmojis = (emoji1, emoji2) => {
 
 /// HAY MATCHES //////////////////////////////////////////////////////////
 
-// const hayMatch = () => {
-//   if (encontrarMatchHorizontal() || encontrarMatchVertical) {
-//     console.log("hay match")
-//     return true
-//   }
-//   else {
-//     console.log("no hay match")
-//     return false
-//   }
-// }
+const hayMatch = () => {
+  if (encontrarMatchHorizontal() || encontrarMatchVertical) {
+    console.log("hay match")
+    return true
+  }
+  else {
+    console.log("no hay match")
+    return false
+  }
+}
