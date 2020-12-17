@@ -142,7 +142,7 @@ botonFacil.onclick = () => {
 
   encontrarMatchHorizontal()
   encontrarMatchVertical()
-  seleccionarItem()
+  seleccionarEmojis()
 };
 
 botonNormal.onclick = () => {
@@ -165,7 +165,7 @@ botonNormal.onclick = () => {
 
   encontrarMatchHorizontal()
   encontrarMatchVertical()
-  seleccionarItem()
+  seleccionarEmojis()
 };
 
 botonDificil.onclick = () => {
@@ -188,7 +188,7 @@ botonDificil.onclick = () => {
   
   encontrarMatchHorizontal()
   encontrarMatchVertical()
-  seleccionarItem()
+  seleccionarEmojis()
 };
 
 botonInfo.onclick = () => {
@@ -204,7 +204,7 @@ botonSeguirJugando.onclick = () => {
 botonReiniciarJuego.onclick = () => {
   mostrarOverlay()
   mostrarModalReiniciarJuego()
-  seleccionarItem()
+  seleccionarEmojis()
 }
 
 botonCancelarReinicioJuego.onclick = () => {
@@ -448,7 +448,7 @@ const agregarEmojiNuevoAHTML = (array, i, j) => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-const seleccionarItem = () => {
+const seleccionarEmojis = () => {
   const emojis = document.querySelectorAll(".emoji")
   
   for (let primerEmoji of emojis) {
