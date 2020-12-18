@@ -128,21 +128,11 @@ botonFacil.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-  seleccionarEmojis()
 };
 
 botonNormal.onclick = () => {
@@ -151,21 +141,11 @@ botonNormal.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-  seleccionarEmojis()
 };
 
 botonDificil.onclick = () => {
@@ -174,21 +154,11 @@ botonDificil.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-  
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-  seleccionarEmojis()
 };
 
 botonInfo.onclick = () => {
@@ -287,13 +257,11 @@ const limpiarGrillas = () => {
 
 const reiniciarJuego = (dificultad) => {
   limpiarGrillas()
-  chequearSiSeOcultaModalReiniciar()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-  seleccionarEmojis()
 }
 
 
@@ -332,13 +300,15 @@ const encontrarMatchHorizontal = () => {
       }        
     } 
   }
+  console.log(matchesHorizontales)
   
   for (let i = 0; i < matchesHorizontales.length; i++) {
+    console.log(obtenerCuadrado(matchesHorizontales[i]))
     eliminarMatchesHTML(obtenerCuadrado(matchesHorizontales[i]))
   }
   eliminarMatchesJS(matchesHorizontales)
   insertarMatchesEliminadosHorizontalesJS()
-  agregarEmojiNuevoHorizontalAJS()  
+  agregarEmojiNuevoAJS()  
 }
 
 const obtenerCuadrado = (arr) => {
@@ -365,7 +335,7 @@ const encontrarMatchVertical = () => {
   }
   eliminarMatchesJS(matchesVerticales)
   insertarMatchesEliminadosVerticalesJS()
-  agregarEmojiNuevoVerticalAJS()
+  agregarEmojiNuevoAJS()
 }
 
 const eliminarMatchesHTML = (array) => {
@@ -381,60 +351,48 @@ const eliminarMatchesJS = (array) => {
 }
 
 const insertarMatchesEliminadosHorizontalesJS = () => {
-  for (let i = 0; i < grilla.length; i++) {
-    for (let j = 0; j < grilla[i].length; j++) {
-       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
-        grilla[i][j] = null
-        grilla[i][j + 1] = null
-        grilla[i][j + 2] = null
-
-      }
+    const matches = []
+    for (let i = 0; i < grilla.length; i++) {
+      for (let j = 0; j < grilla[i].length; j++) {
+         if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+          matches.push([i, j])
+          matches.push([i , j + 1])
+          matches.push([i , j + 2])
+        }         
+      } 
+    }
+    for (let match of matches) {
+      grilla[match[0]][match[1]] = null
     }
   }
-}
 
 const insertarMatchesEliminadosVerticalesJS = () => {
+  const matches = []
   for (let i = 0; i < grilla.length; i++) {
     for (let j = 0; j < grilla[i].length; j++) {
        if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        grilla[i][j] = null
-        grilla[i + 1][j] = null
-        grilla[i + 2][j] = null
+        matches.push([i, j])
+        matches.push([i + 1, j])
+        matches.push([i + 2, j ])
       }         
     } 
+  }
+  for (let match of matches) {
+    grilla[match[0]][match[1]] = null
   }
 }
 
 
-const agregarEmojiNuevoHorizontalAJS = () => {
+const agregarEmojiNuevoAJS = () => {
   for (let i = 0; i < grilla.length; i++) {
     for (let j = 0; j < grilla[i].length; j++) {
-       if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
+       if (!grilla[i][j]) {
         grilla[i][j] = obtenerFrutaAlAzar(frutas)
-        grilla[i][j + 1] = obtenerFrutaAlAzar(frutas)
-        grilla[i][j + 2] = obtenerFrutaAlAzar(frutas)
         agregarEmojiNuevoAHTML(grilla, [i], [j])
-        agregarEmojiNuevoAHTML(grilla, [i], [j+1])
-        agregarEmojiNuevoAHTML(grilla, [i], [j+2])
         
 
       }
     }
-  }
-}
-
-const agregarEmojiNuevoVerticalAJS = () => {
-  for (let i = 0; i < grilla.length; i++) {
-    for (let j = 0; j < grilla[i].length; j++) {
-       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        grilla[i][j] = obtenerFrutaAlAzar(frutas)
-        grilla[i + 1][j] = obtenerFrutaAlAzar(frutas)
-        grilla[i + 2][j] = obtenerFrutaAlAzar(frutas)
-        agregarEmojiNuevoAHTML(grilla, [i], [j])
-        agregarEmojiNuevoAHTML(grilla, [i + 1], [j])
-        agregarEmojiNuevoAHTML(grilla, [i + 2], [j])
-      }         
-    } 
   }
 }
 
