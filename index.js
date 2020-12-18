@@ -127,16 +127,11 @@ botonFacil.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-  }
-
 };
 
 botonNormal.onclick = () => {
@@ -145,18 +140,11 @@ botonNormal.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-
 };
 
 botonDificil.onclick = () => {
@@ -165,18 +153,11 @@ botonDificil.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-  
 };
 
 botonInfo.onclick = () => {
@@ -274,12 +255,11 @@ const limpiarGrillas = () => {
 
 const reiniciarJuego = (dificultad) => {
   limpiarGrillas()
-  chequearSiSeOcultaModalReiniciar()
-  generarGrilla(dificultad);
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
 
 }
 
@@ -319,8 +299,10 @@ const encontrarMatchHorizontal = () => {
       }        
     } 
   }
+  console.log(matchesHorizontales)
   
   for (let i = 0; i < matchesHorizontales.length; i++) {
+    console.log(obtenerCuadrado(matchesHorizontales[i]))
     eliminarMatchesHTML(obtenerCuadrado(matchesHorizontales[i]))
   }
   eliminarMatchesJS(matchesHorizontales)
