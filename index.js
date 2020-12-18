@@ -454,6 +454,7 @@ let segundoClick= ""
 const seleccionarEmojis = () => {
   const emojis = document.querySelectorAll(".emoji")
   
+  
   for (let primerEmoji of emojis) {
     primerEmoji.onclick = () => {
       console.log("entraste al for del primer emoji seleccionado")
@@ -483,20 +484,26 @@ const animacionIntercambiarEmojis = () => {
     console.log("se deberian intercambiar emojis")
     //chequear si hay match
     if (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales()) {
-      console.log(chequearSiHayMatchesVerticales())
-      console.log(chequearSiHayMatchesHorizontales())
+      console.log("hay match orizontal o vertical")
+      encontrarMatchHorizontal()
+      encontrarMatchVertical()
       //lo que armo meli va aca! (eliminar emojis)
+      primerClick.classList.remove("seleccionado")
+      segundoClick.classList.remove("seleccionado")
     }
     else {
       //volver emojis a donde estaban
       console.log("los cuadrados deberian volver a donde estaban")
+      primerClick.classList.remove("seleccionado")
+      segundoClick.classList.remove("seleccionado")
       setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
     }
   }
   else {
     //si no son adyacentes quitar clase ".seleccionado"  
-    primer.classList.remove("seleccionado")
-    segundoEmoji.classList.remove("seleccionado")
+    primerClick.classList.remove("seleccionado")
+    segundoClick.classList.remove("seleccionado")
+    seleccionarEmojis()
     console.log("los emojis deberian deseleccionarse")
   }
 }
