@@ -264,6 +264,7 @@ const generarCuadrado = (x, y, array, dificultad) => {
   }px;"> ${array[x][y]} </div>`;
   cuadrado.style.top = `${x * tamanio}px`;
   cuadrado.style.left = `${y * tamanio}px`;
+  cuadrado.addEventListener('click', seleccionarEmojis);
   cuadrado.style.width = `${tamanio}px`;
   cuadrado.style.height = `${tamanio}px`;
   return cuadrado;
@@ -448,29 +449,35 @@ const agregarEmojiNuevoAHTML = (array, i, j) => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-let primerClick = ""
-let segundoClick= ""
+let primerClick = '';
+let segundoClick = '';
 
-const seleccionarEmojis = () => {
-  const emojis = document.querySelectorAll(".emoji")
-  
-  
-  for (let primerEmoji of emojis) {
-    primerEmoji.onclick = () => {
-      console.log("entraste al for del primer emoji seleccionado")
-      primerClick = primerEmoji
-      primerEmoji.classList.add("seleccionado")
-      for (let segundoEmoji of emojis) {
-        segundoEmoji.onclick = () => {
-          segundoClick = segundoEmoji
-          console.log("entraste al for del segundo emoji seleccionado")
-          segundoEmoji.classList.add("seleccionado")  
-          animacionIntercambiarEmojis()
-        }
+const seleccionarEmojis = e => {
+  primerClick = e.target; // CLICK
+
+  if (primerClick.parentElement && primerClick.parentElement.textContent) {
+    primerClick = primerClick.parentElement;
+  }
+
+  if (!primerClick.className.includes('seleccionado')) {
+    primerClick.classList.add('seleccionado');
+
+    if (segundoClick) {
+      primerClick.classList.remove('seleccionado');
+      segundoClick.classList.remove('seleccionado');
+      if (sonAdyacentes(primerClick, segundoClick)) {
+        animacionIntercambiarEmojis();
+        segundoClick = '';
+      } else {
+        // no son adyacentes!!!
+        segundoClick = primerClick;
+        segundoClick.classList.add('seleccionado');
       }
+    } else {
+      segundoClick = primerClick;
     }
   }
-}
+};
 
 
 const animacionIntercambiarEmojis = () => {
@@ -497,6 +504,7 @@ const animacionIntercambiarEmojis = () => {
       primerClick.classList.remove("seleccionado")
       segundoClick.classList.remove("seleccionado")
       setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
+      console.log("volvieron a donde estaban")
     }
   }
   else {
