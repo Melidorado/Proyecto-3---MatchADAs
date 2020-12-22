@@ -206,7 +206,9 @@ body {
 
 .grilla > div {
     position: absolute;
-    transition: top 0.5s, left 0.5s;
+    transition: 0.5s;
+    cursor: pointer;
+    transform: scale(1);
     text-shadow: none;
     padding: 5px;
     display: flex;
@@ -214,6 +216,10 @@ body {
     align-items: center;
     box-sizing: border-box;
 }
+
+.borrar-emoji{
+    transform: scale(0);
+} 
 
 
 .seleccionado {

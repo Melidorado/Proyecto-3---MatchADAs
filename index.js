@@ -128,21 +128,12 @@ botonFacil.onclick = () => {
   ocultarModalNuevoJuego()
   chequearSiSeOcultaModalReiniciar()
   limpiarGrillas()
-  generarGrilla(dificultad);
-  agregarGrillaAHTML(dificultad);
-  actualizarReloj()
-  while (chequearSiHayMatchesHorizontales()) {
-    encontrarMatchHorizontal()
-    console.log(grilla)
-  }
-  while (chequearSiHayMatchesVerticales()) {
-    encontrarMatchVertical()
-    console.log(grilla)
-  }
-
-  encontrarMatchHorizontal()
-  encontrarMatchVertical()
-  seleccionarEmojis()
+  do {
+    generarGrilla(dificultad);
+  } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
+    agregarGrillaAHTML(dificultad);
+    actualizarReloj()
+  seleccionarEmojis(emojis)
 };
 
 botonNormal.onclick = () => {
@@ -260,11 +251,11 @@ const generarCuadrado = (x, y, array, dificultad) => {
   cuadrado.dataset.y = y;
   cuadrado.classList.add("emoji")
   cuadrado.innerHTML = `<div style="font-size: ${
-    tamanio - 10
+    tamanio - 12
   }px;"> ${array[x][y]} </div>`;
   cuadrado.style.top = `${x * tamanio}px`;
   cuadrado.style.left = `${y * tamanio}px`;
-  cuadrado.addEventListener('click', seleccionarEmojis);
+  
   cuadrado.style.width = `${tamanio}px`;
   cuadrado.style.height = `${tamanio}px`;
   return cuadrado;
@@ -279,6 +270,8 @@ const agregarGrillaAHTML = (dificultad) => {
       grillaHTML.appendChild(generarCuadrado(i, j, listaDeFrutas, dificultad));
     }
   }
+
+  emojis = document.querySelectorAll(".emoji")
 };
 
 const limpiarGrillas = () => {
@@ -449,12 +442,35 @@ const agregarEmojiNuevoAHTML = (array, i, j) => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-let primerClick = '';
-let segundoClick = '';
+let emojiSeleccionado = ''
 
-const seleccionarEmojis = e => {
-  primerClick = e.target; // CLICK
+const seleccionarEmojis = (emojis) => {
+	for (let emoji of emojis) {
+		emoji.onclick = () => {
 
+			if (emojiSeleccionado) {
+				if (sonAdyacentes(emoji, emojiSeleccionado)) {
+					intercambiarEmojis(emoji, emojiSeleccionado);
+					if (hayMatch()) {
+						reemplazarMatches();
+					} else {
+						let emojiSeleccionadoAnterior = emojiSeleccionado;
+						setTimeout(() => intercambiarEmojis(emoji, emojiSeleccionadoAnterior), 450);
+					}
+				} else {
+        emojiSeleccionado.classList.remove('seleccionado');
+        emojiSeleccionado = '';
+        }
+			} else {
+				emoji.classList.add('seleccionado');
+				emojiSeleccionado = emoji;
+			}
+		};
+	}
+};
+
+/* const seleccionarEmojis = (e) => {
+  primerClick = e.target // CLICK
   if (primerClick.parentElement && primerClick.parentElement.textContent) {
     primerClick = primerClick.parentElement;
   }
@@ -463,24 +479,49 @@ const seleccionarEmojis = e => {
     primerClick.classList.add('seleccionado');
 
     if (segundoClick) {
-      primerClick.classList.remove('seleccionado');
-      segundoClick.classList.remove('seleccionado');
+      segundoClick = segundoClick
+      segundoClick.classList.add('seleccionado')
       if (sonAdyacentes(primerClick, segundoClick)) {
-        animacionIntercambiarEmojis();
-        segundoClick = '';
+        console.log(sonAdyacentes(primerClick, segundoClick))
+        console.log("netre")
+        intercambiarEmojis(primerClick, segundoClick)
+        if (hayMatch()) {
+          encontrarMatchHorizontal()
+          encontrarMatchVertical()
+          primerClick.classList.remove('seleccionado')
+          segundoClick.classList.remove('seleccionado')
+        }
+        else {
+          setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
+          primerClick.classList.remove('seleccionado');
+          segundoClick.classList.remove('seleccionado');
+          segundoClick = '';
+        }
+        
       } else {
         // no son adyacentes!!!
-        segundoClick = primerClick;
+        primerClick.classList.remove("seleccionado")
+        primerClick = segundoClick
         segundoClick.classList.add('seleccionado');
+        
+        
       }
     } else {
+      console.log()
       segundoClick = primerClick;
     }
   }
-};
+}; */
+
+const hayMatch = () => {
+  if (chequearSiHayMatchesHorizontales()|| chequearSiHayMatchesVerticales()) {
+    return true
+  }
+  return false
+}
 
 
-const animacionIntercambiarEmojis = () => {
+/* const animacionIntercambiarEmojis = () => {
   if (sonAdyacentes(primerClick, segundoClick)) {
     //chequear si los emojis seleccionados son adyacentes
     console.log("chequeando si son adyacentes")
@@ -514,27 +555,32 @@ const animacionIntercambiarEmojis = () => {
     seleccionarEmojis()
     console.log("los emojis deberian deseleccionarse")
   }
-}
+} */
 
 
 /// SON ADYACENTES //////////////////////////////////////////////////////////
 
 const sonAdyacentes = (emoji1, emoji2) => {
+  const datax1 = Number(emoji1.dataset.x)
+  const datax2 = Number(emoji2.dataset.x)
+  const datay1 = Number(emoji1.dataset.y)
+  const datay2 = Number(emoji2.dataset.y) 
 
-  if ((Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y + 1))
-      || (Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y - 1))
-      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x + 1))
-      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x - 1))) {
-      return true
+  if ((datax1 === datax2 && datay1 === datay2 + 1)
+      || (datax1 === datax2 && datay1 === datay2 - 1)
+      || (datay1 === datay2 && datax1 === datax2 + 1)
+      || (datay1 === datay2 && datax1 === datax2 - 1)) {
+    return true
   }
   else {
-      return false
+    return false
   }
 }
 
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
 const intercambiarEmojis = (emoji1, emoji2) => {
+  console.log(emoji2)
 
   const datax1 = Number(emoji1.dataset.x)
   const datay1 = Number(emoji1.dataset.y)
