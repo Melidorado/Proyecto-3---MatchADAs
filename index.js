@@ -131,8 +131,14 @@ botonFacil.onclick = () => {
   do {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
+<<<<<<< HEAD
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
+=======
+    agregarGrillaAHTML(dificultad);
+    actualizarReloj()
+  seleccionarEmojis(emojis)
+>>>>>>> intercambiarFrutas
 };
 
 botonNormal.onclick = () => {
@@ -230,10 +236,11 @@ const generarCuadrado = (x, y, array, dificultad) => {
   cuadrado.dataset.y = y;
   cuadrado.classList.add("emoji")
   cuadrado.innerHTML = `<div style="font-size: ${
-    tamanio - 10
+    tamanio - 12
   }px;"> ${array[x][y]} </div>`;
   cuadrado.style.top = `${x * tamanio}px`;
   cuadrado.style.left = `${y * tamanio}px`;
+  
   cuadrado.style.width = `${tamanio}px`;
   cuadrado.style.height = `${tamanio}px`;
   return cuadrado;
@@ -248,6 +255,8 @@ const agregarGrillaAHTML = (dificultad) => {
       grillaHTML.appendChild(generarCuadrado(i, j, listaDeFrutas, dificultad));
     }
   }
+
+  emojis = document.querySelectorAll(".emoji")
 };
 
 const limpiarGrillas = () => {
@@ -406,72 +415,145 @@ const agregarEmojiNuevoAHTML = (array, i, j) => {
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-let primerClick = ""
-let segundoClick= ""
+let emojiSeleccionado = ''
 
-const seleccionarEmojis = () => {
-  const emojis = document.querySelectorAll(".emoji")
-  
-  for (let primerEmoji of emojis) {
-    primerEmoji.onclick = () => {
-      console.log("entraste al for del primer emoji seleccionado")
-      primerClick = primerEmoji
-      primerEmoji.classList.add("seleccionado")
-      for (let segundoEmoji of emojis) {
-        segundoEmoji.onclick = () => {
-          segundoClick = segundoEmoji
-          console.log("entraste al for del segundo emoji seleccionado")
-          segundoEmoji.classList.add("seleccionado")
-          if (sonAdyacentes(primerEmoji, segundoEmoji)) {
-            //chequear si los emojis seleccionados son adyacentes
-            console.log("chequeando si son adyacentes")
-            console.log(sonAdyacentes(primerEmoji, segundoEmoji))
-            //si son adyacentes, cambiar de posicion
-            intercambiarEmojis(primerEmoji, segundoEmoji)
-            //
-            console.log("se deberian intercambiar emojis")
-            //chequear si hay match
-            if (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales()) {
-              console.log(chequearSiHayMatchesVerticales())
-              console.log(chequearSiHayMatchesHorizontales())
-              //lo que armo meli va aca! (eliminar emojis)
-            }
-            else {
-              //volver emojis a donde estaban
-              console.log("los cuadrados deberian volver a donde estaban")
-              setTimeout(() => intercambiarEmojis(primerEmoji, segundoEmoji), 450)
-            }
-          }
-          else {
-            //si no son adyacentes quitar clase ".seleccionado"  
-            primerEmoji.classList.remove("seleccionado")
-            segundoEmoji.classList.remove("seleccionado")
-            console.log("los emojis deberian deseleccionarse")
-          }
+const seleccionarEmojis = (emojis) => {
+	for (let emoji of emojis) {
+		emoji.onclick = () => {
+
+			if (emojiSeleccionado) {
+				if (sonAdyacentes(emoji, emojiSeleccionado)) {
+					intercambiarEmojis(emoji, emojiSeleccionado);
+					if (hayMatch()) {
+						reemplazarMatches();
+					} else {
+						let emojiSeleccionadoAnterior = emojiSeleccionado;
+						setTimeout(() => intercambiarEmojis(emoji, emojiSeleccionadoAnterior), 450);
+					}
+				} else {
+        emojiSeleccionado.classList.remove('seleccionado');
+        emojiSeleccionado = '';
         }
+			} else {
+				emoji.classList.add('seleccionado');
+				emojiSeleccionado = emoji;
+			}
+		};
+	}
+};
+
+/* const seleccionarEmojis = (e) => {
+  primerClick = e.target // CLICK
+  if (primerClick.parentElement && primerClick.parentElement.textContent) {
+    primerClick = primerClick.parentElement;
+  }
+
+  if (!primerClick.className.includes('seleccionado')) {
+    primerClick.classList.add('seleccionado');
+
+    if (segundoClick) {
+      segundoClick = segundoClick
+      segundoClick.classList.add('seleccionado')
+      if (sonAdyacentes(primerClick, segundoClick)) {
+        console.log(sonAdyacentes(primerClick, segundoClick))
+        console.log("netre")
+        intercambiarEmojis(primerClick, segundoClick)
+        if (hayMatch()) {
+          encontrarMatchHorizontal()
+          encontrarMatchVertical()
+          primerClick.classList.remove('seleccionado')
+          segundoClick.classList.remove('seleccionado')
+        }
+        else {
+          setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
+          primerClick.classList.remove('seleccionado');
+          segundoClick.classList.remove('seleccionado');
+          segundoClick = '';
+        }
+        
+      } else {
+        // no son adyacentes!!!
+        primerClick.classList.remove("seleccionado")
+        primerClick = segundoClick
+        segundoClick.classList.add('seleccionado');
+        
+        
       }
+    } else {
+      console.log()
+      segundoClick = primerClick;
     }
   }
+}; */
+
+const hayMatch = () => {
+  if (chequearSiHayMatchesHorizontales()|| chequearSiHayMatchesVerticales()) {
+    return true
+  }
+  return false
 }
+
+
+/* const animacionIntercambiarEmojis = () => {
+  if (sonAdyacentes(primerClick, segundoClick)) {
+    //chequear si los emojis seleccionados son adyacentes
+    console.log("chequeando si son adyacentes")
+    console.log(sonAdyacentes(primerClick, segundoClick))
+    //si son adyacentes, cambiar de posicion
+    intercambiarEmojis(primerClick, segundoClick)
+    //
+    console.log("se deberian intercambiar emojis")
+    //chequear si hay match
+    if (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales()) {
+      console.log("hay match orizontal o vertical")
+      encontrarMatchHorizontal()
+      encontrarMatchVertical()
+      //lo que armo meli va aca! (eliminar emojis)
+      primerClick.classList.remove("seleccionado")
+      segundoClick.classList.remove("seleccionado")
+    }
+    else {
+      //volver emojis a donde estaban
+      console.log("los cuadrados deberian volver a donde estaban")
+      primerClick.classList.remove("seleccionado")
+      segundoClick.classList.remove("seleccionado")
+      setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
+      console.log("volvieron a donde estaban")
+    }
+  }
+  else {
+    //si no son adyacentes quitar clase ".seleccionado"  
+    primerClick.classList.remove("seleccionado")
+    segundoClick.classList.remove("seleccionado")
+    seleccionarEmojis()
+    console.log("los emojis deberian deseleccionarse")
+  }
+} */
+
 
 /// SON ADYACENTES //////////////////////////////////////////////////////////
 
 const sonAdyacentes = (emoji1, emoji2) => {
+  const datax1 = Number(emoji1.dataset.x)
+  const datax2 = Number(emoji2.dataset.x)
+  const datay1 = Number(emoji1.dataset.y)
+  const datay2 = Number(emoji2.dataset.y) 
 
-  if ((Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y + 1))
-      || (Number(emoji1.dataset.x) === Number(emoji2.dataset.x) && Number(emoji1.dataset.y) === Number(emoji2.dataset.y - 1))
-      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x + 1))
-      || (Number(emoji1.dataset.y) === Number(emoji2.dataset.y) && Number(emoji1.dataset.x) === Number(emoji2.dataset.x - 1))) {
-      return true
+  if ((datax1 === datax2 && datay1 === datay2 + 1)
+      || (datax1 === datax2 && datay1 === datay2 - 1)
+      || (datay1 === datay2 && datax1 === datax2 + 1)
+      || (datay1 === datay2 && datax1 === datax2 - 1)) {
+    return true
   }
   else {
-      return false
+    return false
   }
 }
 
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
 const intercambiarEmojis = (emoji1, emoji2) => {
+  console.log(emoji2)
 
   const datax1 = Number(emoji1.dataset.x)
   const datay1 = Number(emoji1.dataset.y)
@@ -493,8 +575,8 @@ const intercambiarEmojis = (emoji1, emoji2) => {
   else if (datay1 === datay2 && (datax1 === datax2 + 1 || datax1 === datax2 - 1)) {
     emoji1.dataset.x = datax2;
     emoji2.dataset.x = datax1;
-    emoji1.style.top = `${datax2 * tamanio}px`;
-    emoji2.style.top = `${datax1 * tamanio}px`;
+    emoji1.style.top = `${datax2 * tamanio}px`
+    emoji2.style.top = `${datax1 * tamanio}px`
   }
 }
 
