@@ -131,14 +131,8 @@ botonFacil.onclick = () => {
   do {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
-<<<<<<< HEAD
-  agregarGrillaAHTML(dificultad);
-  actualizarReloj()
-=======
     agregarGrillaAHTML(dificultad);
     actualizarReloj()
-  seleccionarEmojis(emojis)
->>>>>>> intercambiarFrutas
 };
 
 botonNormal.onclick = () => {
@@ -180,7 +174,6 @@ botonSeguirJugando.onclick = () => {
 botonReiniciarJuego.onclick = () => {
   mostrarOverlay()
   mostrarModalReiniciarJuego()
-  seleccionarEmojis()
 }
 
 botonCancelarReinicioJuego.onclick = () => {
@@ -190,6 +183,7 @@ botonCancelarReinicioJuego.onclick = () => {
 
 botonNuevoJuegoReiniciado.onclick = () => {
   ocultarOverlay()
+  ocultarModalReiniciarJuego()
   reiniciarJuego(dificultad)
 }
 
@@ -236,11 +230,11 @@ const generarCuadrado = (x, y, array, dificultad) => {
   cuadrado.dataset.y = y;
   cuadrado.classList.add("emoji")
   cuadrado.innerHTML = `<div style="font-size: ${
-    tamanio - 12
+    tamanio - 15
   }px;"> ${array[x][y]} </div>`;
+  cuadrado.addEventListener('click', seleccionarEmojis)
   cuadrado.style.top = `${x * tamanio}px`;
   cuadrado.style.left = `${y * tamanio}px`;
-  
   cuadrado.style.width = `${tamanio}px`;
   cuadrado.style.height = `${tamanio}px`;
   return cuadrado;
@@ -255,8 +249,6 @@ const agregarGrillaAHTML = (dificultad) => {
       grillaHTML.appendChild(generarCuadrado(i, j, listaDeFrutas, dificultad));
     }
   }
-
-  emojis = document.querySelectorAll(".emoji")
 };
 
 const limpiarGrillas = () => {
@@ -298,6 +290,11 @@ const chequearSiHayMatchesVerticales = () => {
   return false
 }
 
+const encontrarMatches = () => {
+  encontrarMatchHorizontal()
+  encontrarMatchVertical()
+}
+
 const encontrarMatchHorizontal = () => {
   let matchesHorizontales = []
   for (let i = 0; i < grilla.length; i++) {
@@ -309,23 +306,8 @@ const encontrarMatchHorizontal = () => {
       }        
     } 
   }
-  console.log(matchesHorizontales)
-  
-  for (let i = 0; i < matchesHorizontales.length; i++) {
-    console.log(obtenerCuadrado(matchesHorizontales[i]))
-    eliminarMatchesHTML(obtenerCuadrado(matchesHorizontales[i]))
-  }
-  eliminarMatchesJS(matchesHorizontales)
-  insertarMatchesEliminadosHorizontalesJS()
-  agregarEmojiNuevoAJS()  
+  generarNuevosEmojis(matchesHorizontales)
 }
-
-const obtenerCuadrado = (arr) => {
-  return document.querySelector(
-    `div[data-x='${arr[0]}'][data-y='${arr[1]}']`,
-  );
-};
-
 
 const encontrarMatchVertical = () => {
   let matchesVerticales = []
@@ -338,153 +320,69 @@ const encontrarMatchVertical = () => {
       }         
     } 
   }
-
-  for (let i = 0; i < matchesVerticales.length; i++) {
-    eliminarMatchesHTML(obtenerCuadrado(matchesVerticales[i]))
-  }
-  eliminarMatchesJS(matchesVerticales)
-  insertarMatchesEliminadosVerticalesJS()
-  agregarEmojiNuevoAJS()
+  generarNuevosEmojis(matchesVerticales)
 }
 
-const eliminarMatchesHTML = (array) => {
-  for (let child of array.children) {
-    array.removeChild(child)
-  }
+const generarNuevosEmojis = (arrayMatches) => {
+  for (let i = 0; i < arrayMatches.length; i++) {
+    let x = arrayMatches[i][0];
+    let y = arrayMatches[i][1];
+    agregarEmojiNuevoAJS(grilla, x, y)
+    let match = obtenerCuadrado(x,y)
+		match.classList.add('borrar-emoji');
+
+    agregarAHTML(match,x,y)
+  } 
 }
 
-const eliminarMatchesJS = (array) => {
+const agregarEmojiNuevoAJS = (array, x, y) => {
   for (let i = 0; i < array.length; i++) {
-    array[i] = null
+  grilla[x][y] = obtenerFrutaAlAzar(frutas)
   }
+  return grilla[x][y]
 }
-
-const insertarMatchesEliminadosHorizontalesJS = () => {
-    const matches = []
-    for (let i = 0; i < grilla.length; i++) {
-      for (let j = 0; j < grilla[i].length; j++) {
-         if (grilla[i][j] === grilla[i][j + 1] && grilla[i][j + 1] === grilla[i][j + 2]) {
-          matches.push([i, j])
-          matches.push([i , j + 1])
-          matches.push([i , j + 2])
-        }         
-      } 
-    }
-    for (let match of matches) {
-      grilla[match[0]][match[1]] = null
-    }
-  }
-
-const insertarMatchesEliminadosVerticalesJS = () => {
-  const matches = []
-  for (let i = 0; i < grilla.length; i++) {
-    for (let j = 0; j < grilla[i].length; j++) {
-       if (grilla[i + 1] && grilla[i + 2] && grilla[i][j] === grilla[i + 1][j] && grilla[i + 1][j] === grilla[i + 2][j]) {
-        matches.push([i, j])
-        matches.push([i + 1, j])
-        matches.push([i + 2, j ])
-      }         
-    } 
-  }
-  for (let match of matches) {
-    grilla[match[0]][match[1]] = null
-  }
-}
-
-
-const agregarEmojiNuevoAJS = () => {
-  for (let i = 0; i < grilla.length; i++) {
-    for (let j = 0; j < grilla[i].length; j++) {
-       if (!grilla[i][j]) {
-        grilla[i][j] = obtenerFrutaAlAzar(frutas)
-        agregarEmojiNuevoAHTML(grilla, [i], [j])
-        
-
-      }
-    }
-  }
-}
-
-const agregarEmojiNuevoAHTML = (array, i, j) => {
   
-  const espacioEnHTML = document.querySelector(`div[data-x='${[i]}'][data-y='${[j]}']`);
-  espacioEnHTML.innerHTML = `<div style="font-size: ${tamanio - 10}px;"> ${array[i][j]} </div>`;
 
+const obtenerCuadrado = (x,y) => {
+  return document.querySelector(
+    `div[data-x='${[x]}'][data-y='${[y]}']`,
+  );
+};
 
+const agregarAHTML = (match,x,y) => {
+  setTimeout(() => {
+    match.innerHTML = `<div style="font-size: ${tamanio - 15}px;"> ${grilla[x][y]} </div>`;
+    match.classList.remove('borrar-emoji');
+    if (hayMatch()) {
+      encontrarMatches();
+    }
+  }, 700);
 }
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
-let emojiSeleccionado = ''
-
-const seleccionarEmojis = (emojis) => {
-	for (let emoji of emojis) {
-		emoji.onclick = () => {
-
-			if (emojiSeleccionado) {
-				if (sonAdyacentes(emoji, emojiSeleccionado)) {
-					intercambiarEmojis(emoji, emojiSeleccionado);
-					if (hayMatch()) {
-						reemplazarMatches();
-					} else {
-						let emojiSeleccionadoAnterior = emojiSeleccionado;
-						setTimeout(() => intercambiarEmojis(emoji, emojiSeleccionadoAnterior), 450);
-					}
-				} else {
-        emojiSeleccionado.classList.remove('seleccionado');
-        emojiSeleccionado = '';
-        }
-			} else {
-				emoji.classList.add('seleccionado');
-				emojiSeleccionado = emoji;
-			}
-		};
-	}
-};
-
-/* const seleccionarEmojis = (e) => {
-  primerClick = e.target // CLICK
-  if (primerClick.parentElement && primerClick.parentElement.textContent) {
-    primerClick = primerClick.parentElement;
-  }
-
-  if (!primerClick.className.includes('seleccionado')) {
-    primerClick.classList.add('seleccionado');
-
-    if (segundoClick) {
-      segundoClick = segundoClick
-      segundoClick.classList.add('seleccionado')
-      if (sonAdyacentes(primerClick, segundoClick)) {
-        console.log(sonAdyacentes(primerClick, segundoClick))
-        console.log("netre")
-        intercambiarEmojis(primerClick, segundoClick)
-        if (hayMatch()) {
-          encontrarMatchHorizontal()
-          encontrarMatchVertical()
-          primerClick.classList.remove('seleccionado')
-          segundoClick.classList.remove('seleccionado')
-        }
-        else {
-          setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
-          primerClick.classList.remove('seleccionado');
-          segundoClick.classList.remove('seleccionado');
-          segundoClick = '';
-        }
-        
+const seleccionarEmojis = (e) => {
+  let emoji1 = document.querySelector(".seleccionado")
+  if (emoji1 != null) {
+    let click = e.target
+    let emoji2 = click.parentNode
+    if (sonAdyacentes(emoji1, emoji2)) {
+      intercambiarEmojis(emoji1, emoji2)
+      if (hayMatch()) {
+          encontrarMatches()
       } else {
-        // no son adyacentes!!!
-        primerClick.classList.remove("seleccionado")
-        primerClick = segundoClick
-        segundoClick.classList.add('seleccionado');
-        
-        
+          setTimeout(() => intercambiarEmojis(emoji1, emoji2), 400)               
       }
     } else {
-      console.log()
-      segundoClick = primerClick;
+          emoji1.classList.remove("seleccionado")
+          emoji2.classList.add("seleccionado")
     }
-  }
-}; */
+  } else {
+      let click = e.target
+      let emoji1 = click.parentNode
+      emoji1.classList.add("seleccionado")
+    }
+};
 
 const hayMatch = () => {
   if (chequearSiHayMatchesHorizontales()|| chequearSiHayMatchesVerticales()) {
@@ -492,44 +390,6 @@ const hayMatch = () => {
   }
   return false
 }
-
-
-/* const animacionIntercambiarEmojis = () => {
-  if (sonAdyacentes(primerClick, segundoClick)) {
-    //chequear si los emojis seleccionados son adyacentes
-    console.log("chequeando si son adyacentes")
-    console.log(sonAdyacentes(primerClick, segundoClick))
-    //si son adyacentes, cambiar de posicion
-    intercambiarEmojis(primerClick, segundoClick)
-    //
-    console.log("se deberian intercambiar emojis")
-    //chequear si hay match
-    if (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales()) {
-      console.log("hay match orizontal o vertical")
-      encontrarMatchHorizontal()
-      encontrarMatchVertical()
-      //lo que armo meli va aca! (eliminar emojis)
-      primerClick.classList.remove("seleccionado")
-      segundoClick.classList.remove("seleccionado")
-    }
-    else {
-      //volver emojis a donde estaban
-      console.log("los cuadrados deberian volver a donde estaban")
-      primerClick.classList.remove("seleccionado")
-      segundoClick.classList.remove("seleccionado")
-      setTimeout(() => intercambiarEmojis(primerClick, segundoClick), 450)
-      console.log("volvieron a donde estaban")
-    }
-  }
-  else {
-    //si no son adyacentes quitar clase ".seleccionado"  
-    primerClick.classList.remove("seleccionado")
-    segundoClick.classList.remove("seleccionado")
-    seleccionarEmojis()
-    console.log("los emojis deberian deseleccionarse")
-  }
-} */
-
 
 /// SON ADYACENTES //////////////////////////////////////////////////////////
 
@@ -553,8 +413,7 @@ const sonAdyacentes = (emoji1, emoji2) => {
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
 const intercambiarEmojis = (emoji1, emoji2) => {
-  console.log(emoji2)
-
+ 
   const datax1 = Number(emoji1.dataset.x)
   const datay1 = Number(emoji1.dataset.y)
   const datax2 = Number(emoji2.dataset.x)
