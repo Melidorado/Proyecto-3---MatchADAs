@@ -85,7 +85,8 @@ const ocultarModalFinDelJuego = () => {
 }
 
 const mostrarModalFinDelJuego = () => {
-  modalFinDelJuego.classList.remove("ocultar") 
+  modalFinDelJuego.classList.remove("ocultar")
+  mostrarPuntajeFinal()
 }
 
 const ocultarModalBienvenida = () => {
@@ -133,6 +134,8 @@ botonFacil.onclick = () => {
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
     agregarGrillaAHTML(dificultad);
     actualizarReloj()
+    reiniciarPuntos()
+    actualizarValorPuntos()
 };
 
 botonNormal.onclick = () => {
@@ -146,6 +149,8 @@ botonNormal.onclick = () => {
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
+  reiniciarPuntos()
+  actualizarValorPuntos()
 };
 
 botonDificil.onclick = () => {
@@ -159,6 +164,8 @@ botonDificil.onclick = () => {
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   actualizarReloj()
+  reiniciarPuntos()
+  actualizarValorPuntos()
 };
 
 botonInfo.onclick = () => {
@@ -386,6 +393,8 @@ const seleccionarEmojis = (e) => {
 
 const hayMatch = () => {
   if (chequearSiHayMatchesHorizontales()|| chequearSiHayMatchesVerticales()) {
+    sumarPuntos()
+    actualizarValorPuntos()
     return true
   }
   return false
@@ -437,6 +446,28 @@ const intercambiarEmojis = (emoji1, emoji2) => {
     emoji1.style.top = `${datax2 * tamanio}px`
     emoji2.style.top = `${datax1 * tamanio}px`
   }
+}
+
+/// PUNTOS //////////////////////////////////////////////////////////
+
+let puntos = 0
+const valorPuntos = document.querySelector("#valor-puntos")
+const puntajeFinal = document.querySelector("#puntaje-final")
+
+const sumarPuntos = () => {
+  return puntos += 200
+}
+
+const actualizarValorPuntos = () => {
+  valorPuntos.textContent = puntos
+}
+
+const mostrarPuntajeFinal = () => {
+  puntajeFinal.textContent = puntos
+}
+
+const reiniciarPuntos = () => {
+  puntos = 0
 }
 
 
