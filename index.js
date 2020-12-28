@@ -136,8 +136,7 @@ botonFacil.onclick = () => {
   do {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
-    agregarGrillaAHTML(dificultad);
-    actualizarReloj()
+    agregarGrillaAHTML(dificultad)
     reiniciarPuntos()
     actualizarValorPuntos()
     iniciarTimer()
