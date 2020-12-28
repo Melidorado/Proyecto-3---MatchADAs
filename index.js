@@ -1,9 +1,10 @@
 // TEMPORIZADOR ///////////////////////////////////////////////
 
-const actualizarReloj = () => {
-  let segundosIniciales = 30;
 
-  const timer = () => {
+let segundosIniciales = 30
+let temporizador = null
+
+const iniciarTimer = () => {
     let segundosTotales = segundosIniciales;
 
     minutos = Math.floor(segundosTotales / 60);
@@ -12,13 +13,12 @@ const actualizarReloj = () => {
     segundosTotales %= 60;
     segundosTotales = (segundosTotales < 10 ? "0" : "") + segundosTotales;
 
-    document.getElementById("temporizador").innerHTML =
-      minutos + ":" + segundosTotales;
-
+    let segundero = document.getElementById("temporizador")
+    segundero.innerHTML = minutos + ":" + segundosTotales;
     segundosIniciales--;
 
     if (segundosIniciales > -1) {
-      setTimeout(timer, 1000);
+      temporizador = setTimeout(iniciarTimer, 1000);
     }
 
     if (segundosTotales == 00) {
@@ -26,9 +26,13 @@ const actualizarReloj = () => {
       mostrarModalFinDelJuego()
     }
     
-  };
-  timer();
 };
+
+const limpiarTimer = () => {
+  clearTimeout(temporizador)
+  segundosIniciales = 30
+}
+
 
 
 
@@ -132,7 +136,7 @@ botonFacil.onclick = () => {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
     agregarGrillaAHTML(dificultad);
-    actualizarReloj()
+    iniciarTimer()
 };
 
 botonNormal.onclick = () => {
@@ -145,7 +149,7 @@ botonNormal.onclick = () => {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
-  actualizarReloj()
+  iniciarTimer()
 };
 
 botonDificil.onclick = () => {
@@ -158,7 +162,7 @@ botonDificil.onclick = () => {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
-  actualizarReloj()
+  iniciarTimer()
 };
 
 botonInfo.onclick = () => {
@@ -258,11 +262,12 @@ const limpiarGrillas = () => {
 
 const reiniciarJuego = (dificultad) => {
   limpiarGrillas()
+  limpiarTimer()
   do {
     generarGrilla(dificultad);
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
-  actualizarReloj()
+  iniciarTimer()
 }
 
 
