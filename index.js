@@ -300,6 +300,8 @@ const chequearSiHayMatchesVerticales = () => {
 const encontrarMatches = () => {
   encontrarMatchHorizontal()
   encontrarMatchVertical()
+  sumarPuntos()
+  actualizarValorPuntos()
 }
 
 const encontrarMatchHorizontal = () => {
@@ -393,8 +395,6 @@ const seleccionarEmojis = (e) => {
 
 const hayMatch = () => {
   if (chequearSiHayMatchesHorizontales()|| chequearSiHayMatchesVerticales()) {
-    sumarPuntos()
-    actualizarValorPuntos()
     return true
   }
   return false
@@ -455,9 +455,13 @@ const valorPuntos = document.querySelector("#valor-puntos")
 const puntajeFinal = document.querySelector("#puntaje-final")
 
 const sumarPuntos = () => {
-  return puntos += 200
+  // return puntos += 200
+  const frutasEliminadas = document.querySelectorAll(".borrar-emoji")
+  let totalPuntos = 200 * frutasEliminadas.length
+  console.log(frutasEliminadas)
+  return puntos += totalPuntos
 }
-
+ 
 const actualizarValorPuntos = () => {
   valorPuntos.textContent = puntos
 }
