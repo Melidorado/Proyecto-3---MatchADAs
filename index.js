@@ -1,37 +1,37 @@
-// TEMPORIZADOR ///////////////////////////////////////////////
+/// TEMPORIZADOR ///////////////////////////////////////////////
 
 
 let segundosIniciales = 30
 let temporizador = null
 
 const iniciarTimer = () => {
-    let segundosTotales = segundosIniciales;
+  let segundosTotales = segundosIniciales;
 
-    minutos = Math.floor(segundosTotales / 60);
-    minutos = (minutos < 10 ? "0" : "") + minutos;
+  minutos = Math.floor(segundosTotales / 60);
+  minutos = (minutos < 10 ? "0" : "") + minutos;
 
-    segundosTotales %= 60;
-    segundosTotales = (segundosTotales < 10 ? "0" : "") + segundosTotales;
+  segundosTotales %= 60;
+  segundosTotales = (segundosTotales < 10 ? "0" : "") + segundosTotales;
 
-    let segundero = document.getElementById("temporizador")
-    segundero.innerHTML = minutos + ":" + segundosTotales;
-    segundosIniciales--;
+  let segundero = document.getElementById("temporizador")
+  segundero.innerHTML = minutos + ":" + segundosTotales;
+  segundosIniciales--;
 
-    if (segundosIniciales > -1) {
-      temporizador = setTimeout(iniciarTimer, 1000);
-    }
+  if (segundosIniciales > -1) {
+    temporizador = setTimeout(iniciarTimer, 1000);
+  }
 
-    if (segundosTotales == 00) {
-      mostrarOverlay()
-      mostrarModalFinDelJuego()
-    }
+  if (segundosTotales == 00) {
+    mostrarOverlay()
+    mostrarModalFinDelJuego()
+  }
     
 };
 
 const limpiarTimer = () => {
   clearTimeout(temporizador)
   segundosIniciales = 30
-}
+};
 
 
 
@@ -47,80 +47,80 @@ const botonFacil = document.getElementById("boton-facil");
 const botonNormal = document.getElementById("boton-normal");
 const botonDificil = document.getElementById("boton-dificil");
 
-const modalFinDelJuego = document.getElementById("modal-fin-juego")
-const botonNuevoJuego = document.getElementById("boton-nuevo-juego")
-const botonReiniciarJuegoFinalizado = document.getElementById("boton-reiniciar-juego-terminado")
+const modalFinDelJuego = document.getElementById("modal-fin-juego");
+const botonNuevoJuego = document.getElementById("boton-nuevo-juego");
+const botonReiniciarJuegoFinalizado = document.getElementById("boton-reiniciar-juego-terminado");
 
-const botonInfo = document.getElementById("boton-ayuda")
-const modalInfo = document.getElementById("modal-info")
-const botonSeguirJugando = document.getElementById("boton-jugar-info")
-const botonReiniciarJuego = document.getElementById("boton-reiniciar-juego")
+const botonInfo = document.getElementById("boton-ayuda");
+const modalInfo = document.getElementById("modal-info");
+const botonSeguirJugando = document.getElementById("boton-jugar-info");
+const botonReiniciarJuego = document.getElementById("boton-reiniciar-juego");
 
-const modalReiniciarJuego = document.getElementById("modal-reiniciar")
-const botonCancelarReinicioJuego = document.getElementById("boton-cancelar")
-const botonNuevoJuegoReiniciado = document.getElementById("boton-nuevo-juego-reiniciado")
+const modalReiniciarJuego = document.getElementById("modal-reiniciar");
+const botonCancelarReinicioJuego = document.getElementById("boton-cancelar");
+const botonNuevoJuegoReiniciado = document.getElementById("boton-nuevo-juego-reiniciado");
 
 const mostrarModalInformacionDeJuego = () => {
   modalInfo.classList.remove("ocultar")
-}
+};
 
 const ocultarModalInformacionDeJuego = () => {
   modalInfo.classList.add("ocultar")
-}
+};
 
 const ocultarOverlay = () => {
   overlay.classList.add("ocultar");
-}
+};
 
 const mostrarOverlay = () => {
   overlay.classList.remove("ocultar")
-}
+};
 
 const ocultarModalNuevoJuego = () => {
   modalNuevoJuego.classList.add("ocultar");
-}
+};
 
 const mostrarModalNuevoJuego = () => {
   modalNuevoJuego.classList.remove("ocultar")
-}
+};
 
 const ocultarModalFinDelJuego = () => {
   modalFinDelJuego.classList.add("ocultar")
-}
+};
 
 const mostrarModalFinDelJuego = () => {
   modalFinDelJuego.classList.remove("ocultar")
   mostrarPuntajeFinal()
-}
+};
 
 const ocultarModalBienvenida = () => {
   modalBienvenida.classList.add("ocultar");
-}
+};
 
 const mostrarModalBienvenida = () => {
   modalBienvenida.classList.remove("ocultar");
-}
+};
 
 const ocultarModalReiniciarJuego = () => {
   modalReiniciarJuego.classList.add("ocultar")
-}
+};
 
 const mostrarModalReiniciarJuego = () => {
   modalReiniciarJuego.classList.remove("ocultar")
-}
+};
 
 let dificultad = ''
 
 botonNuevoJuego.onclick = () => {
   ocultarModalFinDelJuego()
   mostrarModalNuevoJuego()
-}
+};
 
 botonReiniciarJuegoFinalizado.onclick = () => {
   ocultarModalFinDelJuego()
   ocultarOverlay()
   reiniciarJuego(dificultad)
-}
+};
 
 botonAJugar.onclick = () => {
   ocultarModalBienvenida()
@@ -177,28 +177,28 @@ botonDificil.onclick = () => {
 botonInfo.onclick = () => {
   mostrarOverlay()
   mostrarModalInformacionDeJuego()
-}
+};
 
 botonSeguirJugando.onclick = () => {
   ocultarOverlay()
   ocultarModalInformacionDeJuego()
-}
+};
 
 botonReiniciarJuego.onclick = () => {
   mostrarOverlay()
   mostrarModalReiniciarJuego()
-}
+};
 
 botonCancelarReinicioJuego.onclick = () => {
   ocultarOverlay()
   ocultarModalReiniciarJuego()
-}
+};
 
 botonNuevoJuegoReiniciado.onclick = () => {
   ocultarOverlay()
   ocultarModalReiniciarJuego()
   reiniciarJuego(dificultad)
-}
+};
 
 const chequearSiSeOcultaModalReiniciar = () => {
   if (modalReiniciarJuego.classList.contains("ocultar")) {
@@ -207,7 +207,7 @@ const chequearSiSeOcultaModalReiniciar = () => {
   else {
     ocultarModalReiniciarJuego()
   }
-}
+};
 
  
 //GRILLA ///////////////////////////////////////////////
@@ -267,7 +267,7 @@ const agregarGrillaAHTML = (dificultad) => {
 const limpiarGrillas = () => {
   grilla = []
   grillaHTML.innerHTML = ''
-}
+};
 
 const reiniciarJuego = (dificultad) => {
   limpiarGrillas()
@@ -277,7 +277,7 @@ const reiniciarJuego = (dificultad) => {
   } while (chequearSiHayMatchesHorizontales() || chequearSiHayMatchesVerticales())
   agregarGrillaAHTML(dificultad);
   iniciarTimer()
-}
+};
 
 
 /// ENCONTRAR MATCHES //////////////////////////////////////////////////////////
@@ -291,7 +291,7 @@ const chequearSiHayMatchesHorizontales = () => {
     } 
   }
   return false
-}
+};
 
 const chequearSiHayMatchesVerticales = () => {
   for (let i = 0; i < grilla.length; i++) {
@@ -302,14 +302,14 @@ const chequearSiHayMatchesVerticales = () => {
     } 
   }
   return false
-}
+};
 
 const encontrarMatches = () => {
   encontrarMatchHorizontal()
   encontrarMatchVertical()
   sumarPuntos()
   actualizarValorPuntos()
-}
+};
 
 const encontrarMatchHorizontal = () => {
   let matchesHorizontales = []
@@ -323,7 +323,7 @@ const encontrarMatchHorizontal = () => {
     } 
   }
   generarNuevosEmojis(matchesHorizontales)
-}
+};
 
 const encontrarMatchVertical = () => {
   let matchesVerticales = []
@@ -337,7 +337,7 @@ const encontrarMatchVertical = () => {
     } 
   }
   generarNuevosEmojis(matchesVerticales)
-}
+};
 
 const generarNuevosEmojis = (arrayMatches) => {
   for (let i = 0; i < arrayMatches.length; i++) {
@@ -349,14 +349,14 @@ const generarNuevosEmojis = (arrayMatches) => {
 
     agregarAHTML(match,x,y)
   } 
-}
+};
 
 const agregarEmojiNuevoAJS = (array, x, y) => {
   for (let i = 0; i < array.length; i++) {
   grilla[x][y] = obtenerFrutaAlAzar(frutas)
   }
   return grilla[x][y]
-}
+};
   
 
 const obtenerCuadrado = (x,y) => {
@@ -373,7 +373,7 @@ const agregarAHTML = (match,x,y) => {
       encontrarMatches();
     }
   }, 700);
-}
+};
 
 /// SELECCIONAR ITEMS //////////////////////////////////////////////////////////
 
@@ -385,19 +385,21 @@ const seleccionarEmojis = (e) => {
     if (sonAdyacentes(emoji1, emoji2)) {
       intercambiarEmojis(emoji1, emoji2)
       if (hayMatch()) {
-          encontrarMatches()
-      } else {
-          setTimeout(() => intercambiarEmojis(emoji1, emoji2), 400)               
+        encontrarMatches()
+      } 
+      else {
+        setTimeout(() => intercambiarEmojis(emoji1, emoji2), 400)               
       }
-    } else {
-          emoji1.classList.remove("seleccionado")
-          emoji2.classList.add("seleccionado")
+    } 
+    else {
+      emoji1.classList.remove("seleccionado")
     }
-  } else {
-      let click = e.target
-      let emoji1 = click.parentNode
-      emoji1.classList.add("seleccionado")
-    }
+  } 
+  else {
+    let click = e.target
+    let emoji1 = click.parentNode
+    emoji1.classList.add("seleccionado")
+  }
 };
 
 const hayMatch = () => {
@@ -405,7 +407,7 @@ const hayMatch = () => {
     return true
   }
   return false
-}
+};
 
 /// SON ADYACENTES //////////////////////////////////////////////////////////
 
@@ -416,15 +418,15 @@ const sonAdyacentes = (emoji1, emoji2) => {
   const datay2 = Number(emoji2.dataset.y) 
 
   if ((datax1 === datax2 && datay1 === datay2 + 1)
-      || (datax1 === datax2 && datay1 === datay2 - 1)
-      || (datay1 === datay2 && datax1 === datax2 + 1)
-      || (datay1 === datay2 && datax1 === datax2 - 1)) {
+    || (datax1 === datax2 && datay1 === datay2 - 1)
+    || (datay1 === datay2 && datax1 === datax2 + 1)
+    || (datay1 === datay2 && datax1 === datax2 - 1)) {
     return true
   }
   else {
     return false
   }
-}
+};
 
 /// INTERCAMBIAR EMOJIS //////////////////////////////////////////////////////////
 
@@ -453,7 +455,7 @@ const intercambiarEmojis = (emoji1, emoji2) => {
     emoji1.style.top = `${datax2 * tamanio}px`
     emoji2.style.top = `${datax1 * tamanio}px`
   }
-}
+};
 
 /// PUNTOS //////////////////////////////////////////////////////////
 
@@ -462,23 +464,21 @@ const valorPuntos = document.querySelector("#valor-puntos")
 const puntajeFinal = document.querySelector("#puntaje-final")
 
 const sumarPuntos = () => {
-  // return puntos += 200
   const frutasEliminadas = document.querySelectorAll(".borrar-emoji")
   let totalPuntos = 200 * frutasEliminadas.length
-  console.log(frutasEliminadas)
   return puntos += totalPuntos
-}
+};
  
 const actualizarValorPuntos = () => {
   valorPuntos.textContent = puntos
-}
+};
 
 const mostrarPuntajeFinal = () => {
   puntajeFinal.textContent = puntos
-}
+};
 
 const reiniciarPuntos = () => {
   puntos = 0
-}
+};
 
 
